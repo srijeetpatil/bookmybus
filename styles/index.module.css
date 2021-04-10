@@ -1,0 +1,97 @@
+.font {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 100;
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  border-bottom: solid thin #ccc;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f43f3f;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 1024px;
+  margin: auto;
+}
+
+.to_from_inputs {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.search_button {
+  width: max-content;
+  border: none;
+  outline: none;
+  padding: 1rem 2rem 1rem 2rem;
+  margin: auto;
+  cursor: pointer;
+  background-color: #fa303d;
+  color: white;
+  font-weight: 400;
+  border-radius: 5px;
+}
+
+.bus_details {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+}
+
+.bus_card {
+  width: 100%;
+  border: solid thin #ccc;
+  border-radius: 2px;
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.bus_card:hover {
+  box-shadow: 10px 10px 5px rgb(228, 224, 224);
+}
+
+.bus_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: space-around;
+}
+
+.bus_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bus_name {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.bus_smallText {
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.bookButton {
+  width: max-content;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  margin: auto;
+  cursor: pointer;
+  background-color: #fa303d;
+  color: white;
+  font-weight: 400;
+}

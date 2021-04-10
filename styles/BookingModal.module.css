@@ -1,0 +1,92 @@
+.modal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.seatPicker {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100px;
+  border: solid thin #ccc;
+}
+
+.seats {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin: 5px 5px 5px 5px;
+  justify-content: space-between;
+  align-items: bottom;
+}
+
+.seats_left {
+  width: 45%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-self: flex-end;
+}
+
+.seats_right {
+  width: 45%;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.seat {
+  width: 15px;
+  background-color: grey;
+  height: 1rem;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.seatFree {
+  width: 15px;
+  background-color: #ccc;
+  height: 1rem;
+  margin-right: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.seatFree:hover {
+  background-color: crimson;
+}
+
+.ticketDetails {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 300px;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.legend {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.text {
+  margin-top: 1rem;
+}
+
+.confirmButton {
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  width: max-content;
+  height: max-content;
+  background-color: #28ee76;
+  margin-top: 1rem;
+}

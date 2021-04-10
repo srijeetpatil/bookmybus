@@ -1,0 +1,11 @@
+.travel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.places {
+  display: flex;
+  flex-direction: column;
+}
