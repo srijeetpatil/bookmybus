@@ -218,8 +218,10 @@ function LocalTravel() {
                 options={cities}
                 getOptionLabel={(option) => option.name}
                 onChange={(e, v) => {
-                  setCurrentPlace(v.name);
-                  searchTransport(v.name);
+                  if (v) {
+                    setCurrentPlace(v.name);
+                    searchTransport(v.name);
+                  }
                 }}
                 style={{ width: "50%", marginTop: "2rem" }}
                 renderInput={(params) => (
