@@ -1,6 +1,10 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
 const { MONGODB_URI, MONGODB_DB } = process.env;
+
+let cachedClient = null;
+let cachedDb = null;
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -14,38 +18,27 @@ if (!MONGODB_DB) {
   );
 }
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = global.mongo;
-
-if (!cached) {
-  cached = global.mongo = { conn: null, promise: null };
-}
-
 export async function connectToDatabase() {
-  if (cached.conn) {
-    return cached.conn;
+  if (cachedClient && cachedDb) {
+    return { client: cachedClient, db: cachedDb };
   }
-
-  if (!cached.promise) {
-    const opts = {
+  try {
+    const client = mongoose.connect(MONGODB_URI, {
+      useUnifiedTopology: true,
       useNewUrlParser: true,
-      useUnifiedTopology: true
-    };
-    cached.promise = MongoClient.connect(MONGODB_URI, opts)
-      .then(client => {
-        return {
-          client,
-          db: client.db(MONGODB_DB)
-        };
-      })
-      .catch(reject => {
-        return null;
-      });
+      useCreateIndex: true,
+    });
+    mongoose.connection.on("connected", () => {
+      console.log("Connected to DB");
+    });
+    mongoose.connection.on("error", (error) => {
+      console.log(error);
+    });
+    const db = MONGODB_DB;
+    cachedClient = client;
+    cachedDb = db;
+    return { client, db };
+  } catch (error) {
+    console.log(error);
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
 }

@@ -179,7 +179,10 @@ export default function Home(props) {
 
   const buses = availableBuses.map((bus) => {
     return (
-      <div className={`${styles.bus_card} ${styles.font}`}>
+      <div
+        className={`${styles.bus_card} ${styles.font}`}
+        id={bus.company_name}
+      >
         <div className={styles.bus_wrapper}>
           <div className={styles.bus_info}>
             <label className={styles.bus_name}>
