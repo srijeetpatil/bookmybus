@@ -9,7 +9,6 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import smoothScroll from "../util/smoothScroll";
 import BookingModal from "../src/Components/BookingModal";
 
 const containerStyle = {
