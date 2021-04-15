@@ -1,6 +1,7 @@
 var connectObject = require("../../../util/mongodb");
 var User = require("../../../models/User");
 var mongoose = require("mongoose");
+require("dotenv").config();
 
 async function userExists(req, res) {
   await connectObject.connectToDatabase();
@@ -41,6 +42,6 @@ export default async function Login(req, res) {
         console.log("Error in Userexists");
       });
   } else {
-    res.status(405).json({ error: "Method not allowed" });
+    res.status(405).json({ error: process.env.MONGODB_URI });
   }
 }
