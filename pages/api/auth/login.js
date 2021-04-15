@@ -1,7 +1,6 @@
 var connectObject = require("../../../util/mongodb");
 var User = require("../../../models/User");
 var mongoose = require("mongoose");
-require("dotenv").config();
 
 async function userExists(req, res) {
   await connectObject.connectToDatabase();

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-require("dotenv").config();
 
 const { MONGODB_URI, MONGODB_DB } = process.env;
 
