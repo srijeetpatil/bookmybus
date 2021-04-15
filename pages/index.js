@@ -218,7 +218,7 @@ export default function Home(props) {
         >
           Book tickets
         </button>
-        <h1>{process.env.MONGODB_URI}</h1>
+        <h1>{process.env.React_App_MONGODB_URI}</h1>
       </div>
     );
   });
