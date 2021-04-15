@@ -10,6 +10,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import BookingModal from "../src/Components/BookingModal";
+require("dotenv").config();
 
 const containerStyle = {
   width: "100%",
@@ -218,6 +219,7 @@ export default function Home(props) {
         >
           Book tickets
         </button>
+        <h1>{process.env.MONGODB_URI}</h1>
       </div>
     );
   });
