@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const { MONGODB_URI, MONGODB_DB } = process.env;
 
-if (!MONGODB_URI) {
-  MONGODB_URI =
-    "mongodb+srv://Master:abcd@1234@bookbus.5qhuf.mongodb.net/pbl?retryWrites=true&w=majority";
-}
-
 let cachedClient = null;
 let cachedDb = null;
 
