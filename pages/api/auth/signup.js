@@ -49,7 +49,7 @@ export default async function Signup(req, res) {
         }
       })
       .catch((reject) => {
-        console.log("Error in Userexists");
+        console.log("Error rejected in Userexists");
       });
   } else {
     res.status(405).json({ error: "Method not allowed" });

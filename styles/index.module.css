@@ -1,17 +1,17 @@
 .font {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-weight: 100;
 }
 
 .navbar {
   width: 100%;
   display: flex;
-  border-bottom: solid thin #ccc;
   justify-content: space-between;
   align-items: center;
-  background-color: #f43f3f;
   color: white;
+  min-height: 3rem;
+  padding-top: 1rem;
+  max-height: 3rem;
 }
 
 .content {
@@ -19,6 +19,7 @@
   flex-direction: column;
   width: 1024px;
   margin: auto;
+  padding: 2rem 0 2rem 0;
 }
 
 .to_from_inputs {
@@ -26,7 +27,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .search_button {
@@ -38,13 +39,15 @@
   cursor: pointer;
   background-color: #fa303d;
   color: white;
+  margin-top: 2rem;
   font-weight: 400;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .bus_details {
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
   padding-bottom: 2rem;
 }
 
@@ -56,10 +59,7 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-}
-
-.bus_card:hover {
-  box-shadow: 10px 10px 5px rgb(228, 224, 224);
+  background-color: white;
 }
 
 .bus_wrapper {
@@ -94,4 +94,74 @@
   background-color: #fa303d;
   color: white;
   font-weight: 400;
+}
+
+.tab {
+  margin: auto;
+  width: max-content;
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+.tab_left {
+  color: white;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  border-radius: 15px 0 0 15px;
+  background-color: #fa303d;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.tab_left:hover {
+  background-color: #d81623;
+}
+
+.tab_right:hover {
+  background-color: #d81623;
+}
+
+.tab_right {
+  color: white;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  border-radius: 0 15px 15px 0;
+  background-color: #fa303d;
+  font-weight: 400;
+  cursor: pointer;
+  border-left: solid thin #f55b65;
+}
+
+.chips {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 0.5rem;
+  background-color: #e9e1e1;
+  border-radius: 10px;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.inputTextfield {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: solid thin white;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  background: transparent;
+}
+
+.inputTextfield:hover {
+  border: solid thin rgb(60, 138, 8);
 }

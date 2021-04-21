@@ -7,6 +7,23 @@ var userSchema = new Schema({
   password: String,
   name: String,
   phone: Number,
+  bookings: [
+    {
+      id: String,
+      company_name: String,
+      bus_name: String,
+      start_time: String,
+      start_place: String,
+      end_time: String,
+      end_place: String,
+      commute_time: String,
+      city_from: String,
+      city_to: String,
+      total: Number,
+      my_seats: [],
+      time: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", userSchema);

@@ -204,6 +204,20 @@ function LocalTravel() {
   return (
     <div>
       <HomeLayout>
+        <div className={styles.tab}>
+          <button
+            className={styles.tab_left}
+            onClick={() => (window.location.href = "/")}
+          >
+            <b>Book bus tickets</b>
+          </button>
+          <button
+            className={styles.tab_right}
+            onClick={() => (window.location.href = "/local-travel")}
+          >
+            <b>Local travel</b>
+          </button>
+        </div>
         <div className={`${styles2.travel} ${fontStyles.font}`}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <div

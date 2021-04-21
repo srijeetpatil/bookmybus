@@ -54,6 +54,15 @@
   cursor: pointer;
 }
 
+.seatMine {
+  width: 15px;
+  background-color: rgb(129, 138, 2);
+  height: 1rem;
+  margin-right: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
 .seatFree:hover {
   background-color: crimson;
 }

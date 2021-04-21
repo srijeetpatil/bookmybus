@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Backdrop, Fade, makeStyles } from "@material-ui/core";
 import fontStyle from "../../styles/index.module.css";
 import styles from "../../styles/BookingModal.module.css";
 import { checkCookie, setCookie, getCookie } from "../../util/cookie";
+import { decrypt } from "../../util/crypto";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -16,11 +17,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getId = () => {
+  let auth = getCookie("auth");
+  auth = decrypt(auth);
+  return auth;
+};
+
 function BookingModal(props) {
   const classes = useStyles();
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [purchaseStep, setPurchaseStep] = useState(false);
   const [total, setTotal] = useState(0);
+  const [id, setId] = useState();
+
+  useEffect(() => {
+    let id = getId();
+    setId(id);
+  }, []);
 
   const confirmPurchase = () => {
     if (total > 0) {
@@ -97,7 +110,7 @@ function BookingModal(props) {
         let occ = props.occ;
         let seatData = [];
         for (let j = 1; j <= 16; j++) {
-          if (occ.indexOf(j) != -1) {
+          if (!occ[j]) {
             seatData = seatData.concat(
               <div
                 className={styles.seatFree}
@@ -119,6 +132,8 @@ function BookingModal(props) {
                 }}
               ></div>
             );
+          } else if (occ[j] === id) {
+            seatData = seatData.concat(<div className={styles.seatMine}></div>);
           } else {
             seatData = seatData.concat(<div className={styles.seat}></div>);
           }
@@ -126,7 +141,7 @@ function BookingModal(props) {
         seatData = <div className={styles.seats_left}>{seatData}</div>;
         let seatData2 = [];
         for (let j = 17; j <= 34; j++) {
-          if (occ.indexOf(j) != -1) {
+          if (!occ[j]) {
             seatData2 = seatData2.concat(
               <div
                 className={styles.seatFree}
@@ -147,6 +162,10 @@ function BookingModal(props) {
                   seatSelected(j);
                 }}
               ></div>
+            );
+          } else if (occ[j] === id) {
+            seatData2 = seatData2.concat(
+              <div className={styles.seatMine}></div>
             );
           } else {
             seatData2 = seatData2.concat(<div className={styles.seat}></div>);
@@ -187,6 +206,28 @@ function BookingModal(props) {
                   <div
                     style={{
                       backgroundColor: "grey",
+                      width: "15px",
+                      height: "15px",
+                      marginLeft: "1rem",
+                    }}
+                  ></div>
+                </label>
+                <label className={styles.legend}>
+                  Your booked seats{" "}
+                  <div
+                    style={{
+                      backgroundColor: "rgb(129, 138, 2)",
+                      width: "15px",
+                      height: "15px",
+                      marginLeft: "1rem",
+                    }}
+                  ></div>
+                </label>
+                <label className={styles.legend}>
+                  Selected seats{" "}
+                  <div
+                    style={{
+                      backgroundColor: "green",
                       width: "15px",
                       height: "15px",
                       marginLeft: "1rem",

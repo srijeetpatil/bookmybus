@@ -2,14 +2,8 @@ import Head from "next/head";
 import HomeLayout from "../src/Layouts/HomeLayout";
 import styles from "../styles/index.module.css";
 import { useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import BookingModal from "../src/Components/BookingModal";
+import GoogleMapReact from "google-map-react";
+import axiosConfig from "../util/config";
 
 const containerStyle = {
   width: "100%",
@@ -37,7 +31,7 @@ const data = [
     city_to: "Pune",
   },
   {
-    company_name: "Neeta tours and travels ",
+    company_name: "Neeta tours and travels",
     bus_name: "Bharat Benz A/C Seater (2+1)",
     start_time: "16:00",
     start_place: "Lonavala On Expressway",
@@ -50,7 +44,7 @@ const data = [
     city_to: "Pune",
   },
   {
-    company_name: "Dolphin travel house ",
+    company_name: "Dolphin travel house",
     bus_name: "A/C Seater (2+1)",
     start_time: "21:30",
     start_place: "Lonavala On Expressway",
@@ -132,143 +126,64 @@ let cities = [
 ];
 
 export default function Home(props) {
-  const [availableBuses, setAvailablebuses] = useState([]);
-  const [bookModalOpen, setBookmodalOpen] = useState(false);
-  const [bookModal, setBookmodal] = useState({});
-  const [occ, setOcc] = useState([]);
-
-  const openBookingModal = (seats_available) => {
-    let occ = [];
-    function getRndInteger(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
-    }
-    let i = 0;
-
-    while (i < seats_available) {
-      let number = getRndInteger(1, 35);
-      if (occ.indexOf(number) == -1) {
-        occ = occ.concat([number]);
-        i++;
-      }
-    }
-    setOcc(occ);
-    setBookmodalOpen(true);
-  };
-
-  const closeBookingModal = () => {
-    setBookmodalOpen(false);
-  };
-
-  const setUpBookingModal = (data) => {
-    setBookmodal(data);
-    openBookingModal(data.seats_available);
-  };
-
-  const searchBuses = (from, to) => {
-    let newBusdata = [];
-    for (let i = 0; i < data.length; i++) {
-      let fr = data[i].city_from;
-      let t = data[i].city_to;
-      if (from === fr && to === t) {
-        newBusdata = newBusdata.concat([data[i]]);
-      }
-    }
-    setAvailablebuses(newBusdata);
-  };
-
-  const buses = availableBuses.map((bus) => {
-    return (
-      <div
-        className={`${styles.bus_card} ${styles.font}`}
-        id={bus.company_name}
-      >
-        <div className={styles.bus_wrapper}>
-          <div className={styles.bus_info}>
-            <label className={styles.bus_name}>
-              <b>{bus.company_name}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.bus_name}</label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>
-              <b>{bus.start_time}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.start_place}</label>
-          </div>
-          <div style={{ marginLeft: "2rem" }}>{bus.commute_time}</div>
-          <div className={styles.bus_info}>
-            <label>
-              <b>{bus.end_time}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.end_place}</label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>Starts from</label>
-            <label>
-              <b>{bus.starting_price}</b>
-            </label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>{bus.seats_available} Seats available</label>
-          </div>
-        </div>
-        <button
-          className={styles.bookButton}
-          onClick={() => setUpBookingModal(bus)}
-        >
-          Book tickets
-        </button>
-        <h1>{process.env.React_App_MONGODB_URI}</h1>
-      </div>
-    );
-  });
-
   return (
     <div className="container">
       <Head>
         <title>Bookbus - book your bus tickets online here</title>
-        <body style={{ width: "100vw" }}></body>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <BookingModal
-        data={bookModal}
-        open={bookModalOpen}
-        close={closeBookingModal}
-        occ={occ}
-      />
       <HomeLayout>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div className={styles.tab}>
+          <button
+            className={styles.tab_left}
+            onClick={() => (window.location.href = "/")}
+          >
+            <b>Book bus tickets</b>
+          </button>
+          <button
+            className={styles.tab_right}
+            onClick={() => (window.location.href = "/local-travel")}
+          >
+            <b>Local travel</b>
+          </button>
+        </div>
+        <div
+          style={{
+            marginTop: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <div className={styles.to_from_inputs}>
-            <Autocomplete
-              id="fromInput"
-              options={cities}
-              getOptionLabel={(option) => option.name}
-              style={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label="From" variant="outlined" />
-              )}
-            />
-            <Autocomplete
-              id="toInput"
-              options={cities}
-              getOptionLabel={(option) => option.name}
-              style={{ width: 300, marginLeft: "2rem" }}
-              renderInput={(params) => (
-                <TextField {...params} label="To" variant="outlined" />
-              )}
-            />
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              label="Date"
-              KeyboardButtonProps={{
-                "aria-label": "change date",
+            <div>
+              <input
+                className={`${styles.font} ${styles.inputTextfield}`}
+                id="fromInput"
+                type="text"
+                placeholder="From"
+              />
+            </div>
+            <div style={{ marginLeft: "2rem" }}>
+              <input
+                className={`${styles.font} ${styles.inputTextfield}`}
+                id="toInput"
+                type="text"
+                placeholder="To"
+              />
+            </div>
+            <input
+              type="date"
+              id="date"
+              name="Date"
+              style={{
+                marginLeft: "2rem",
+                padding: "0.5rem 1rem 0.5rem 1rem",
+                backgroundColor: "#fa303d",
+                color: "white",
+                border: "none",
               }}
-              style={{ marginLeft: "2rem", width: 300 }}
-            />
+            ></input>
           </div>
           <button
             className={`${styles.search_button} ${styles.font}`}
@@ -276,14 +191,36 @@ export default function Home(props) {
               let from = document.getElementById("fromInput").value;
               let to = document.getElementById("toInput").value;
               if (from && to) {
-                searchBuses(from, to);
+                window.location.href = "/search?from=" + from + "&to=" + to;
               }
             }}
           >
-            Search buses
+            <b>Search buses</b>
           </button>
-        </MuiPickersUtilsProvider>
-        <div className={styles.bus_details}>{buses}</div>
+          <h3
+            style={{
+              marginTop: "2rem",
+              textAlign: "center",
+              fontWeight: "300",
+            }}
+          >
+            Popular destinations
+          </h3>
+          <div className={styles.chips}>
+            <div className={styles.chip}>Mumbai</div>
+            <div className={styles.chip}>Pune</div>
+            <div className={styles.chip}>Kolhapur</div>
+            <div className={styles.chip}>Ahmednagar</div>
+            <div className={styles.chip}>Nashik</div>
+            <div className={styles.chip}>Satara</div>
+            <div className={styles.chip}>Ratnagiri</div>
+            <div className={styles.chip}>Chiplun</div>
+            <div className={styles.chip}>Yavatmal</div>
+            <div className={styles.chip}>Latur</div>
+            <div className={styles.chip}>Nandurbar</div>
+            <div className={styles.chip}>Alibaug</div>
+          </div>
+        </div>
       </HomeLayout>
     </div>
   );

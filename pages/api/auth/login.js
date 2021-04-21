@@ -31,7 +31,8 @@ export default async function Login(req, res) {
           if (err) {
             res.status(500).json({ error: "Internal server error" });
           } else if (result.length != 0) {
-            res.status(200).json({ result: result });
+            let id = result[0]._id;
+            res.status(200).json({ id: id });
           } else {
             res.status(400).json({ error: "Invalid email or password" });
           }
@@ -41,6 +42,6 @@ export default async function Login(req, res) {
         console.log("Error in Userexists");
       });
   } else {
-    res.status(405).json({ error: process.env.MONGODB_URI });
+    res.status(405).json({ error: "Method not allowed" });
   }
 }
