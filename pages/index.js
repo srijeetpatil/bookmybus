@@ -126,6 +126,7 @@ let cities = [
 ];
 
 export default function Home(props) {
+  useEffect(() => {}, []);
   return (
     <div className="container">
       <Head>

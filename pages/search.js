@@ -23,7 +23,6 @@ function Search(props) {
   const [successFailureOpen, setSuccessFailure] = useState(false);
 
   useEffect(() => {
-    console.log("Yes weve reached");
     if (!props.is_url) {
       window.location.href = "/";
     } else {
@@ -33,7 +32,6 @@ function Search(props) {
 
   const openBookingModal = (seats) => {
     let occ = [];
-
     for (let i = 0; i < seats.length; i++) {
       if (seats[i]) {
         occ[i] = seats[i];

@@ -9,7 +9,7 @@ var userSchema = new Schema({
   phone: Number,
   bookings: [
     {
-      id: String,
+      busId: String,
       company_name: String,
       bus_name: String,
       start_time: String,

@@ -4,6 +4,7 @@ import fontStyle from "../../styles/index.module.css";
 import styles from "../../styles/BookingModal.module.css";
 import { checkCookie, setCookie, getCookie } from "../../util/cookie";
 import { decrypt } from "../../util/crypto";
+import axiosConfig from "../../util/config";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -35,43 +36,38 @@ function BookingModal(props) {
     setId(id);
   }, []);
 
-  const confirmPurchase = () => {
+  const bookTickets = (seats, total) => {
+    return new Promise((resolve, reject) => {
+      console.log(seats);
+      let data = {
+        seats: seats,
+        total: total,
+      };
+      axiosConfig
+        .post("api/" + props.data._id + "/book-ticket", data)
+        .then((response) => {
+          if (response.status == 200) {
+            resolve();
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  const confirmPurchase = async (seats, total) => {
     if (total > 0) {
-      setPurchaseStep(true);
-      if (checkCookie("bookings")) {
-        let bookings = getCookie("bookings");
-        bookings = JSON.parse(bookings);
-        props.data.total = total;
-        props.data.selectedSeats = selectedSeats;
-        bookings.data = bookings.data.concat([props.data]);
-        bookings = JSON.stringify(bookings);
-        setCookie("bookings", bookings, 5);
-      } else {
-        props.data.total = total;
-        props.data.selectedSeats = selectedSeats;
-        let bookings = {
-          data: [props.data],
-        };
-        bookings = JSON.stringify(bookings);
-        setCookie("bookings", bookings, 5);
-      }
-      if (checkCookie("history")) {
-        let history = getCookie("history");
-        history = JSON.parse(history);
-        props.data.total = total;
-        props.data.selectedSeats = selectedSeats;
-        history.data = history.data.concat([props.data]);
-        history = JSON.stringify(history);
-        setCookie("history", history, 5);
-      } else {
-        props.data.total = total;
-        props.data.selectedSeats = selectedSeats;
-        let history = {
-          data: [props.data],
-        };
-        history = JSON.stringify(history);
-        setCookie("history", history, 5);
-      }
+      await bookTickets(seats, total)
+        .then((resolve) => {
+          setPurchaseStep(true);
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 3000);
+        })
+        .catch((reject) => {
+          alert(reject);
+        });
     }
   };
 
@@ -109,7 +105,7 @@ function BookingModal(props) {
       let seats = () => {
         let occ = props.occ;
         let seatData = [];
-        for (let j = 1; j <= 16; j++) {
+        for (let j = 0; j <= 15; j++) {
           if (!occ[j]) {
             seatData = seatData.concat(
               <div
@@ -128,7 +124,7 @@ function BookingModal(props) {
                       "seat-number" + j
                     ).style.backgroundColor = "green";
                   }
-                  seatSelected(j);
+                  seatSelected(j + 1);
                 }}
               ></div>
             );
@@ -140,7 +136,7 @@ function BookingModal(props) {
         }
         seatData = <div className={styles.seats_left}>{seatData}</div>;
         let seatData2 = [];
-        for (let j = 17; j <= 34; j++) {
+        for (let j = 16; j <= 33; j++) {
           if (!occ[j]) {
             seatData2 = seatData2.concat(
               <div
@@ -159,7 +155,7 @@ function BookingModal(props) {
                       "seat-number" + j
                     ).style.backgroundColor = "green";
                   }
-                  seatSelected(j);
+                  seatSelected(j + 1);
                 }}
               ></div>
             );
@@ -250,7 +246,7 @@ function BookingModal(props) {
                 </label>
                 <button
                   className={styles.confirmButton}
-                  onClick={confirmPurchase}
+                  onClick={() => confirmPurchase(selectedSeats, total)}
                 >
                   Confirm
                 </button>
@@ -278,6 +274,9 @@ function BookingModal(props) {
         className={classes.modal}
         open={props.open}
         onClose={() => {
+          if (purchaseStep) {
+            window.location.reload(false);
+          }
           setPurchaseStep(false);
           setSelectedSeats([]);
           setTotal(0);
