@@ -62,8 +62,16 @@ async function cancelSeats(req, res, bus, seats) {
     let data = req.body;
     let busId = data.busId;
     let busSeats = bus.seats;
+    let id = req.headers.authorization;
+    id = id.split("Token ")[1];
+    id = decrypt.decrypt(id);
     for (let i = 0; i < seats.length; i++) {
-      busSeats[seats[i] - 1] = null;
+      if (busSeats[seats[i] - 1] != id.toString()) {
+        res.status(400).json("These seats do not belong to you");
+        return reject(false);
+      } else {
+        busSeats[seats[i] - 1] = null;
+      }
     }
     Bus.findByIdAndUpdate(
       busId,
@@ -109,6 +117,7 @@ async function middleware(req, res) {
 
 export default async function CancelTicket(req, res) {
   if (req.method === "DELETE") {
+    console.log(req.body);
     let { result, user } = await middleware(req, res);
     let seats = await cancelBooking(req, res, user);
     if (seats) {

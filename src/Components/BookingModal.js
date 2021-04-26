@@ -38,7 +38,6 @@ function BookingModal(props) {
 
   const bookTickets = (seats, total) => {
     return new Promise((resolve, reject) => {
-      console.log(seats);
       let data = {
         seats: seats,
         total: total,

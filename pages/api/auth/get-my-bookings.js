@@ -14,11 +14,7 @@ async function Getmyprofile(req, res) {
         if (err) {
           res.status(500).json({ error: "Internal server error" });
         } else if (result) {
-          let data = {
-            name: result.name,
-            phone: result.phone,
-          };
-          res.status(200).json({ result: data });
+          res.status(200).json({ result: result.bookings });
         }
       });
     } else {

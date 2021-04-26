@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeLayout from "../src/Layouts/HomeLayout";
 import { TextField, makeStyles } from "@material-ui/core/";
 import { Autocomplete } from "@material-ui/lab";
@@ -10,6 +10,8 @@ import DateFnsUtils from "@date-io/date-fns";
 import styles from "../styles/index.module.css";
 import fontStyles from "../styles/index.module.css";
 import styles2 from "../styles/Localtravel.module.css";
+import GoogleMapReact from "google-map-react";
+import { RickshawMarker, BusMarker } from "../src/Components/Markers";
 
 let cities = [
   {
@@ -141,9 +143,21 @@ let data = [
   },
 ];
 
-function LocalTravel() {
+const coordinates = [19.021042, 73.017971];
+
+const navratna = [19.012014, 73.014302];
+const palmbeach = [19.007979, 73.016003];
+
+function LocalTravel(props) {
   const [currentPlace, setCurrentPlace] = useState("");
   const [transport, setTransport] = useState([]);
+
+  useEffect(() => {
+    if (props.at) {
+      setCurrentPlace(props.at);
+      searchTransport(props.at);
+    }
+  }, []);
 
   const searchTransport = (place) => {
     let placeObj;
@@ -160,11 +174,26 @@ function LocalTravel() {
     }
   };
 
+  const createMapOptions = (maps) => {
+    return {
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: true,
+      streetViewControl: false,
+      rotateControl: true,
+      fullscreenControl: false,
+    };
+  };
+
   const transportTypes = transport.map((type) => {
     let routes;
     if (Array.isArray(type.routes)) {
       routes = type.routes.map((r) => {
-        return <label>{r}</label>;
+        return (
+          <label>
+            <br />- {r}
+          </label>
+        );
       });
     } else {
       routes = "NA";
@@ -172,20 +201,20 @@ function LocalTravel() {
     return (
       <div className={`${styles.bus_card} ${styles.font}`}>
         <div className={styles.bus_wrapper}>
-          <div className={styles.bus_info}>
+          <div className={styles2.bus_info}>
             <label className={styles.bus_name}>
               <b>{type.name}</b>
             </label>
             <label className={styles.bus_smallText}>{type.rate}</label>
           </div>
-          <div className={styles.bus_info}>
+          <div className={styles2.bus_info}>
             <label>
               <b>Time</b>
             </label>
             <label className={styles.bus_smallText}>{type.time}</label>
           </div>
           <div style={{ marginLeft: "2rem" }}></div>
-          <div className={styles.bus_info}>
+          <div className={styles2.bus_info}>
             <label>
               <b>Route</b>
             </label>
@@ -195,66 +224,89 @@ function LocalTravel() {
             <label>
               <b>Places you can reach </b>
             </label>
-            {routes}
+            <div style={{ fontSize: "12px" }}>{routes}</div>
           </div>
         </div>
       </div>
     );
   });
+
+  const lcData = () => {
+    if (currentPlace) {
+      return (
+        <div className={styles2.data}>
+          <div className={styles2.transportTypes}>{transportTypes}</div>
+          <GoogleMapReact
+            resetBoundsOnResize={true}
+            bootstrapURLKeys={{
+              key: "AIzaSyDQg3PSBzzgwaxuppE2G3A6_zA35YXTOys",
+            }}
+            defaultCenter={{
+              lat: coordinates[0],
+              lng: coordinates[1],
+            }}
+            zoom={13}
+            options={createMapOptions}
+            style={{ width: "32em", height: "32em" }}
+          >
+            <RickshawMarker lat={navratna[0]} lng={navratna[1]} />
+            <BusMarker lat={palmbeach[0]} lng={palmbeach[1]} />
+          </GoogleMapReact>
+        </div>
+      );
+    }
+    return <div></div>;
+  };
   return (
     <div>
       <HomeLayout>
-        <div className={styles.tab}>
-          <button
-            className={styles.tab_left}
-            onClick={() => (window.location.href = "/")}
-          >
-            <b>Book bus tickets</b>
-          </button>
-          <button
-            className={styles.tab_right}
-            onClick={() => (window.location.href = "/local-travel")}
-          >
-            <b>Local travel</b>
-          </button>
+        <div className={styles2.heading}>Local travel: How does it work?</div>
+        <div className={styles2.description}>
+          <ul>
+            <li>Select a place you want to visit in Navi Mumbai</li>
+            <li>
+              Get all the appropriate modes of transport data to travel locally
+            </li>
+            <li>
+              Choose the best mode of transport that fits your requirement based
+              on distance, cost, and its effect on the environment :)
+            </li>
+            <li>Check the route to know more</li>
+          </ul>
         </div>
         <div className={`${styles2.travel} ${fontStyles.font}`}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Autocomplete
-                id="fromInput"
-                options={cities}
-                getOptionLabel={(option) => option.name}
-                onChange={(e, v) => {
-                  if (v) {
-                    setCurrentPlace(v.name);
-                    searchTransport(v.name);
-                  }
-                }}
-                style={{ width: "50%", marginTop: "2rem" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Where are you right now?"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </div>
-          </MuiPickersUtilsProvider>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (document.getElementById("search").value) {
+                window.location.href =
+                  "/local-travel?at=" + document.getElementById("search").value;
+              }
+            }}
+          >
+            <input
+              className={`${fontStyles.font} ${fontStyles.inputTextfield}`}
+              type="text"
+              id="search"
+              placeholder="Where are you right now"
+              defaultValue={props.at}
+            />
+          </form>
         </div>
-        <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
-          {transportTypes}
-        </div>
+        {lcData()}
       </HomeLayout>
     </div>
   );
 }
 
 export default LocalTravel;
+
+export async function getServerSideProps(context) {
+  let query = context.req.__NEXT_INIT_QUERY;
+  let at = query.at;
+  return {
+    props: {
+      at: at,
+    },
+  };
+}

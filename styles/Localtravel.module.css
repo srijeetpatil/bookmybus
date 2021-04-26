@@ -7,5 +7,49 @@
 
 .places {
   display: flex;
+  width: 20%;
   flex-direction: column;
+}
+
+.bus_info {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.data {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 64em;
+  height: 100vh;
+}
+
+.transportTypes {
+  width: 50%;
+}
+
+@keyframes header {
+  from {
+    margin-top: 5rem;
+  }
+  to {
+    margin-top: 0rem;
+  }
+}
+
+.heading {
+  font-size: 6rem;
+  color: aliceblue;
+  animation: header 1s;
+  user-select: none;
+}
+
+.description {
+  color: #fa303d;
+  font-size: 25px;
+  width: 100%;
+  margin-top: 1rem;
+  user-select: none;
 }

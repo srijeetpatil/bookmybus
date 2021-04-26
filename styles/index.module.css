@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: aliceblue;
   min-height: 3rem;
   padding-top: 1rem;
   max-height: 3rem;
@@ -38,7 +38,7 @@
   margin: auto;
   cursor: pointer;
   background-color: #fa303d;
-  color: white;
+  color: aliceblue;
   margin-top: 2rem;
   font-weight: 400;
   border-radius: 15px;
@@ -56,10 +56,15 @@
   border: solid thin #ccc;
   border-radius: 2px;
   padding: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: aliceblue;
+}
+
+.bus_card_tab {
+  background-color: #ccc;
+  padding: 2px 4px 2px 4px;
 }
 
 .bus_wrapper {
@@ -72,6 +77,10 @@
 .bus_info {
   display: flex;
   flex-direction: column;
+}
+
+.bus_seat_no {
+  width: 5rem;
 }
 
 .bus_name {
@@ -92,8 +101,16 @@
   margin: auto;
   cursor: pointer;
   background-color: #fa303d;
-  color: white;
+  color: aliceblue;
   font-weight: 400;
+}
+
+.cancel_booking {
+  margin-top: 1rem;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #e9e1e1;
+  padding: 0.4rem;
 }
 
 .tab {
@@ -103,7 +120,7 @@
 }
 
 .tab_left {
-  color: white;
+  color: aliceblue;
   border: none;
   outline: none;
   padding: 1rem;
@@ -122,7 +139,7 @@
 }
 
 .tab_right {
-  color: white;
+  color: aliceblue;
   border: none;
   outline: none;
   padding: 1rem;
@@ -155,7 +172,7 @@
   height: 100%;
   width: 100%;
   outline: none;
-  border: solid thin white;
+  border: solid thin aliceblue;
   padding: 15px;
   border-radius: 5px;
   font-size: 16px;
