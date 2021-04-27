@@ -10,7 +10,7 @@ import { encrypt } from "../../util/crypto";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-function Login() {
+function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -112,7 +112,7 @@ function Login() {
           Or
         </label>
         <GoogleLogin
-          clientId="909111877751-6lrt9g971i9n79nbopr2dtp85mv3e52i.apps.googleusercontent.com"
+          clientId={props.GOOGLE_CLIENT_ID}
           buttonText="Login"
           render={(renderProps) => (
             <div className={styles.oauthTab} onClick={renderProps.onClick}>
@@ -148,7 +148,7 @@ function Login() {
           cookiePolicy={"single_host_origin"}
         />
         <FacebookLogin
-          appId="467945691086395"
+          appId={props.FACEBOOK_APP_ID}
           autoLoad={false}
           callback={responseFacebook}
           render={(renderProps) => (
@@ -182,3 +182,15 @@ function Login() {
 }
 
 export default Login;
+
+export async function getServerSideProps(context) {
+  const { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } = process.env;
+  if (!FACEBOOK_APP_ID) FACEBOOK_APP_ID = null;
+  if (!GOOGLE_CLIENT_ID) GOOGLE_CLIENT_ID = null;
+  return {
+    props: {
+      FACEBOOK_APP_ID: FACEBOOK_APP_ID,
+      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID,
+    },
+  };
+}

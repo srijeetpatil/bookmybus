@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
 import HomeLayout from "../src/Layouts/HomeLayout";
-import { TextField, makeStyles } from "@material-ui/core/";
-import { Autocomplete } from "@material-ui/lab";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import styles from "../styles/index.module.css";
 import fontStyles from "../styles/index.module.css";
 import styles2 from "../styles/Localtravel.module.css";
@@ -239,7 +232,7 @@ function LocalTravel(props) {
           <GoogleMapReact
             resetBoundsOnResize={true}
             bootstrapURLKeys={{
-              key: "AIzaSyDQg3PSBzzgwaxuppE2G3A6_zA35YXTOys",
+              key: props.GOOGLE_API,
             }}
             defaultCenter={{
               lat: coordinates[0],
@@ -271,7 +264,7 @@ function LocalTravel(props) {
               Choose the best mode of transport that fits your requirement based
               on distance, cost, and its effect on the environment :)
             </li>
-            <li>Check the route to know more</li>
+            <li>Check the places in map to find these modes of transport</li>
           </ul>
         </div>
         <div className={`${styles2.travel} ${fontStyles.font}`}>
@@ -302,11 +295,15 @@ function LocalTravel(props) {
 export default LocalTravel;
 
 export async function getServerSideProps(context) {
+  const { GOOGLE_API } = process.env;
   let query = context.req.__NEXT_INIT_QUERY;
   let at = query.at;
+  if (!at) at = null;
+  if (!GOOGLE_API) GOOGLE_API = null;
   return {
     props: {
       at: at,
+      GOOGLE_API: GOOGLE_API,
     },
   };
 }
