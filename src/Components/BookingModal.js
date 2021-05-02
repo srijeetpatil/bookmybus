@@ -5,6 +5,7 @@ import styles from "../../styles/BookingModal.module.css";
 import { checkCookie, setCookie, getCookie } from "../../util/cookie";
 import { decrypt } from "../../util/crypto";
 import axiosConfig from "../../util/config";
+import Seat from "./Seat";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -125,12 +126,22 @@ function BookingModal(props) {
                   }
                   seatSelected(j + 1);
                 }}
-              ></div>
+              >
+                <Seat />
+              </div>
             );
           } else if (occ[j] === id) {
-            seatData = seatData.concat(<div className={styles.seatMine}></div>);
+            seatData = seatData.concat(
+              <div className={styles.seatMine}>
+                <Seat />
+              </div>
+            );
           } else {
-            seatData = seatData.concat(<div className={styles.seat}></div>);
+            seatData = seatData.concat(
+              <div className={styles.seat}>
+                <Seat />
+              </div>
+            );
           }
         }
         seatData = <div className={styles.seats_left}>{seatData}</div>;
@@ -156,14 +167,22 @@ function BookingModal(props) {
                   }
                   seatSelected(j + 1);
                 }}
-              ></div>
+              >
+                <Seat />
+              </div>
             );
           } else if (occ[j] === id) {
             seatData2 = seatData2.concat(
-              <div className={styles.seatMine}></div>
+              <div className={styles.seatMine}>
+                <Seat />
+              </div>
             );
           } else {
-            seatData2 = seatData2.concat(<div className={styles.seat}></div>);
+            seatData2 = seatData2.concat(
+              <div className={styles.seat}>
+                <Seat />
+              </div>
+            );
           }
         }
         seatData2 = <div className={styles.seats_right}>{seatData2}</div>;

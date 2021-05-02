@@ -1,186 +1,58 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import HomeLayout from "../src/Layouts/HomeLayout";
 import styles from "../styles/index.module.css";
-import fontStyles from "../styles/index.module.css";
 import styles2 from "../styles/Localtravel.module.css";
 import GoogleMapReact from "google-map-react";
-import { RickshawMarker, BusMarker } from "../src/Components/Markers";
-
-let cities = [
-  {
-    name: "Panvel",
-  },
-  {
-    name: "Seawoods",
-  },
-  {
-    name: "Kharghar",
-  },
-];
-
-let data = [
-  {
-    place: "Seawoods",
-    types: [
-      {
-        name: "Auto / Rickshaw",
-        rate: "INR 18 first 2 Kms, 1 Re per 100 metres after that",
-        route: "anywhere",
-        time: "Depends on the distance",
-        routes: "NA",
-      },
-      {
-        name: "Sharing Auto / Rickshaw",
-        rate: "INR 15",
-        route: "fixed",
-        routes: ["Railway stn to sec 48", "Railway stn to Navratna Hotel"],
-        time: "3-4mins",
-      },
-      {
-        name: "Bus NMMT",
-        rate: "INR 7",
-        route: "fixed",
-        routes: [
-          "Railway stn to sec 48",
-          "Railway stn to Navratna Hotel",
-          "Railway stn to NRI complex Seawoods",
-        ],
-        time: "7-8mins",
-      },
-      {
-        name: "Walking",
-        rate: "NA",
-        route: "NA",
-        routes: ["Sec 36, 38, 40, 42, 44, 46, 48", "D Mart"],
-        time: "10-12mins",
-      },
-    ],
-  },
-  {
-    place: "Kharghar",
-    types: [
-      {
-        name: "Auto / Rickshaw",
-        rate: "INR 18 first 2 Kms, 1 Re per 100 metres after that",
-        route: "anywhere",
-        time: "Depends on the distance",
-        routes: "NA",
-      },
-      {
-        name: "Sharing Eco van",
-        rate: "INR 20",
-        route: "fixed",
-        routes: [
-          "Railway stn to Central park",
-          "Railway stn to Shilp Chowk",
-          "Driving range",
-        ],
-        time: "3-4mins",
-      },
-      {
-        name: "Bus NMMT",
-        rate: "INR 7",
-        route: "fixed",
-        routes: [
-          "Railway stn to Shilp Chowk",
-          "Railway stn to Hiranandani Complex",
-          "Railway stn to Little world mall",
-        ],
-        time: "7-8mins",
-      },
-      {
-        name: "Walking",
-        rate: "NA",
-        route: "NA",
-        routes: ["Glomax mall", "Little world mall"],
-        time: "5-10mins",
-      },
-    ],
-  },
-  {
-    place: "Panvel",
-    types: [
-      {
-        name: "Auto / Rickshaw",
-        rate: "INR 18 first 2 Kms, 1 Re per 100 metres after that",
-        route: "anywhere",
-        time: "Depends on the distance",
-        routes: "NA",
-      },
-      {
-        name: "Sharing Eco van",
-        rate: "INR 30",
-        route: "fixed",
-        routes: [
-          "Railway stn to Pillai HOC COE",
-          "Railway stn to Amity University",
-          "Driving range",
-        ],
-        time: "3-4mins",
-      },
-      {
-        name: "Bus NMMT",
-        rate: "INR 7",
-        route: "fixed",
-        routes: ["Railway stn to Orion mall", "Railway stn to Dmart"],
-        time: "7-8mins",
-      },
-      {
-        name: "Walking",
-        rate: "NA",
-        route: "NA",
-        routes: ["Orion mall", "Gandhi hospital"],
-        time: "5-10mins",
-      },
-    ],
-  },
-];
-
-const coordinates = [19.021042, 73.017971];
-
-const navratna = [19.012014, 73.014302];
-const palmbeach = [19.007979, 73.016003];
+import {
+  RickshawMarker,
+  BusMarker,
+  TaxiMarker,
+  BicycleMarker,
+} from "../src/Components/Markers";
+import axios from "axios";
+import MarkerPopup from "../src/Components/MarkerPopup";
 
 function LocalTravel(props) {
-  const [currentPlace, setCurrentPlace] = useState("");
-  const [transport, setTransport] = useState([]);
+  const [coordinates, setCoordinates] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (props.at) {
-      setCurrentPlace(props.at);
-      searchTransport(props.at);
+    if (props.data && props.data.length > 0) {
+      let coordinates = [props.data[0].lat, props.data[0].lng];
+      setData(props.data[0].transport);
+      setCoordinates(coordinates);
     }
   }, []);
 
-  const searchTransport = (place) => {
-    let placeObj;
-    for (let i = 0; i < data.length; i++) {
-      if (place === data[i].place) {
-        placeObj = data[i];
-        break;
-      }
-    }
-    if (placeObj) {
-      setTransport(placeObj.types);
-    } else {
-      setTransport([]);
-    }
-  };
-
   const createMapOptions = (maps) => {
     return {
-      zoomControl: false,
+      zoomControl: true,
       mapTypeControl: false,
-      scaleControl: true,
+      scaleControl: false,
       streetViewControl: false,
       rotateControl: true,
       fullscreenControl: false,
     };
   };
 
-  const transportTypes = transport.map((type) => {
+  const cities = props.cities.map((city) => {
+    return (
+      <div
+        className={styles.chip}
+        id={city}
+        onClick={() => {
+          window.location.href = "/local-travel/?at=" + city;
+        }}
+      >
+        {city}
+      </div>
+    );
+  });
+
+  const transportTypes = data.map((type) => {
     let routes;
-    if (Array.isArray(type.routes)) {
+    if (type.routes.length > 0) {
       routes = type.routes.map((r) => {
         return (
           <label>
@@ -195,7 +67,7 @@ function LocalTravel(props) {
       <div className={`${styles.bus_card} ${styles.font}`}>
         <div className={styles.bus_wrapper}>
           <div className={styles2.bus_info}>
-            <label className={styles.bus_name}>
+            <label>
               <b>{type.name}</b>
             </label>
             <label className={styles.bus_smallText}>{type.rate}</label>
@@ -224,8 +96,57 @@ function LocalTravel(props) {
     );
   });
 
+  const markers = () => {
+    let bunch = [];
+    for (let i = 0; i < data.length; i++) {
+      let transport = data[i];
+      for (let j = 0; j < transport.coordinates.length; j++) {
+        let marker;
+        if (transport.transport_type === "Rickshaw") {
+          marker = (
+            <div
+              lat={transport.coordinates[j].lat}
+              lng={transport.coordinates[j].lng}
+            >
+              <RickshawMarker name={transport.name} routes={transport.routes} />
+            </div>
+          );
+        } else if (transport.transport_type === "Bus") {
+          marker = (
+            <div
+              lat={transport.coordinates[j].lat}
+              lng={transport.coordinates[j].lng}
+            >
+              <BusMarker />
+            </div>
+          );
+        } else if (transport.transport_type === "Taxi") {
+          marker = (
+            <div
+              lat={transport.coordinates[j].lat}
+              lng={transport.coordinates[j].lng}
+            >
+              <TaxiMarker />
+            </div>
+          );
+        } else if (transport.transport_type === "Bicycle") {
+          marker = (
+            <div
+              lat={transport.coordinates[j].lat}
+              lng={transport.coordinates[j].lng}
+            >
+              <BicycleMarker />
+            </div>
+          );
+        }
+        bunch = bunch.concat(marker);
+      }
+    }
+    return bunch;
+  };
+
   const lcData = () => {
-    if (currentPlace) {
+    if (coordinates) {
       return (
         <div className={styles2.data}>
           <div className={styles2.transportTypes}>{transportTypes}</div>
@@ -238,27 +159,38 @@ function LocalTravel(props) {
               lat: coordinates[0],
               lng: coordinates[1],
             }}
-            zoom={13}
+            zoom={15}
             options={createMapOptions}
             style={{ width: "32em", height: "32em" }}
           >
-            <RickshawMarker lat={navratna[0]} lng={navratna[1]} />
-            <BusMarker lat={palmbeach[0]} lng={palmbeach[1]} />
+            {markers()}
           </GoogleMapReact>
         </div>
+      );
+    } else if (props.at && !coordinates) {
+      return (
+        <h2 style={{ textAlign: "center", marginTop: "4rem" }}>
+          No data found
+        </h2>
       );
     }
     return <div></div>;
   };
+
   return (
     <div>
+      <Head>
+        <title>Bookbus - Local travel {props.at}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <HomeLayout>
         <div className={styles2.heading}>Local travel: How does it work?</div>
         <div className={styles2.description}>
           <ul>
             <li>Select a place you want to visit in Navi Mumbai</li>
             <li>
-              Get all the appropriate modes of transport data to travel locally
+              Get all the appropriate modes of public transport data to travel
+              locally
             </li>
             <li>
               Choose the best mode of transport that fits your requirement based
@@ -267,25 +199,17 @@ function LocalTravel(props) {
             <li>Check the places in map to find these modes of transport</li>
           </ul>
         </div>
-        <div className={`${styles2.travel} ${fontStyles.font}`}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (document.getElementById("search").value) {
-                window.location.href =
-                  "/local-travel?at=" + document.getElementById("search").value;
-              }
-            }}
-          >
-            <input
-              className={`${fontStyles.font} ${fontStyles.inputTextfield}`}
-              type="text"
-              id="search"
-              placeholder="Where are you right now"
-              defaultValue={props.at}
-            />
-          </form>
-        </div>
+        <h3
+          style={{
+            marginTop: "2rem",
+            textAlign: "center",
+            color: "#d81623",
+          }}
+        >
+          Where are you right now?
+        </h3>
+        <div className={styles.chips}>{cities}</div>
+        <h2>{props.at}</h2>
         {lcData()}
       </HomeLayout>
     </div>
@@ -294,16 +218,47 @@ function LocalTravel(props) {
 
 export default LocalTravel;
 
+const getCities = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get("http://localhost:3000/api/local-travel/get-cities")
+      .then((response) => {
+        return resolve(response.data.cities);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+const getCity = (city) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get("http://localhost:3000/api/local-travel/City/" + city)
+      .then((response) => {
+        return resolve(response.data.data);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export async function getServerSideProps(context) {
   const { GOOGLE_API } = process.env;
+  let data = null;
   let query = context.req.__NEXT_INIT_QUERY;
   let at = query.at;
   if (!at) at = null;
+  else data = await getCity(at);
   if (!GOOGLE_API) GOOGLE_API = null;
+  let cities = await getCities();
   return {
     props: {
       at: at,
       GOOGLE_API: GOOGLE_API,
+      cities: cities,
+      data: data,
     },
   };
 }

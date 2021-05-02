@@ -60,57 +60,68 @@ function Search(props) {
     setSuccessFailure(false);
   };
 
-  const buses = availableBuses.map((bus) => {
+  const buses = () => {
+    if (availableBuses.length > 0) {
+      return availableBuses.map((bus) => {
+        return (
+          <div
+            className={`${styles.bus_card} ${styles.font}`}
+            id={bus.company_name}
+          >
+            <div className={styles.bus_wrapper}>
+              <div className={styles.bus_info}>
+                <label className={styles.bus_name}>
+                  <b>{bus.company_name}</b>
+                </label>
+                <label className={styles.bus_smallText}>{bus.bus_name}</label>
+              </div>
+              <div className={styles.bus_info}>
+                <label>
+                  <b>{bus.start_time}</b>
+                </label>
+                <label className={styles.bus_smallText}>
+                  {bus.start_place}
+                </label>
+              </div>
+              <div style={{ marginLeft: "2rem" }}>{bus.commute_time}</div>
+              <div className={styles.bus_info}>
+                <label>
+                  <b>{bus.end_time}</b>
+                </label>
+                <label className={styles.bus_smallText}>{bus.end_place}</label>
+              </div>
+              <div className={styles.bus_info}>
+                <label>Starts from</label>
+                <label>
+                  <b>{bus.starting_price}</b>
+                </label>
+              </div>
+              <div className={styles.bus_info}>
+                <label>{bus.seats_available} Seats available</label>
+              </div>
+            </div>
+            <button
+              className={styles.bookButton}
+              onClick={() => {
+                if (isLogged()) {
+                  setUpBookingModal(bus);
+                } else {
+                  openSuccessFailure();
+                }
+              }}
+            >
+              Book tickets
+            </button>
+          </div>
+        );
+      });
+    }
     return (
-      <div
-        className={`${styles.bus_card} ${styles.font}`}
-        id={bus.company_name}
-      >
-        <div className={styles.bus_wrapper}>
-          <div className={styles.bus_info}>
-            <label className={styles.bus_name}>
-              <b>{bus.company_name}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.bus_name}</label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>
-              <b>{bus.start_time}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.start_place}</label>
-          </div>
-          <div style={{ marginLeft: "2rem" }}>{bus.commute_time}</div>
-          <div className={styles.bus_info}>
-            <label>
-              <b>{bus.end_time}</b>
-            </label>
-            <label className={styles.bus_smallText}>{bus.end_place}</label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>Starts from</label>
-            <label>
-              <b>{bus.starting_price}</b>
-            </label>
-          </div>
-          <div className={styles.bus_info}>
-            <label>{bus.seats_available} Seats available</label>
-          </div>
-        </div>
-        <button
-          className={styles.bookButton}
-          onClick={() => {
-            if (isLogged()) {
-              setUpBookingModal(bus);
-            } else {
-              openSuccessFailure();
-            }
-          }}
-        >
-          Book tickets
-        </button>
-      </div>
+      <h2 style={{ textAlign: "center" }}>
+        No buses available with current parameters
+      </h2>
     );
-  });
+  };
 
   return (
     <div>
@@ -184,7 +195,7 @@ function Search(props) {
             <b>Search buses</b>
           </button>
         </div>
-        <div className={styles.bus_details}>{buses}</div>
+        <div className={styles.bus_details}>{buses()}</div>
       </HomeLayout>
     </div>
   );

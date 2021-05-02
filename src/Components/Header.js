@@ -16,6 +16,7 @@ function Header() {
     right: false,
   });
   const [userdata, setUserdata] = useState();
+  const [isLoginChecked, setIsLoginChecked] = useState(false);
 
   useEffect(async () => {
     await getMyProfile()
@@ -23,6 +24,7 @@ function Header() {
         setUserdata(resolve);
       })
       .catch((reject) => {});
+    setIsLoginChecked(true);
   }, []);
 
   const getMyProfile = () => {
@@ -49,7 +51,7 @@ function Header() {
     setDrawer({ ...drawer, [anchor]: open });
   };
 
-  if (userdata) {
+  if (userdata && isLoginChecked) {
     return (
       <div className={styles.navbar}>
         <h1
@@ -72,35 +74,35 @@ function Header() {
             <div className={`${headerStyles.drawer} ${styles.font}`}>
               <Avatar src="" />
               <h3 className={headerStyles.username}>
-                {userdata.data.result.name}
+                <b>{userdata.data.result.name}</b>
               </h3>
               <label
                 className={headerStyles.option}
                 onClick={() => (window.location.href = "/local-travel")}
               >
-                Local travel
+                <b>Local travel</b>
               </label>
               <label
                 className={headerStyles.option}
                 onClick={() => (window.location.href = "/profile/my-bookings")}
               >
-                Your current booking
+                <b>Your current booking</b>
               </label>
               <label
                 className={headerStyles.option}
                 onClick={() => (window.location.href = "/profile/history")}
               >
-                History
+                <b>History</b>
               </label>
               <label className={headerStyles.option} onClick={logout}>
-                Log out
+                <b>Log out</b>
               </label>
             </div>
           </Drawer>
         </React.Fragment>
       </div>
     );
-  } else {
+  } else if (isLoginChecked && !userdata) {
     return (
       <div className={styles.navbar}>
         <h1
@@ -127,6 +129,17 @@ function Header() {
       </div>
     );
   }
+  return (
+    <div className={styles.navbar}>
+      <h1
+        className={styles.font}
+        style={{ cursor: "pointer", marginLeft: "2rem" }}
+        onClick={() => (window.location.href = "/")}
+      >
+        Bookmybus
+      </h1>
+    </div>
+  );
 }
 
 export default Header;

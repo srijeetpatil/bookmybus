@@ -8,6 +8,7 @@ import axios from "axios";
 import querystring from "querystring";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import axiosConfig from "../../util/config";
 
 function Signup(props) {
   const [name, setName] = useState();
@@ -61,7 +62,17 @@ function Signup(props) {
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
+    axiosConfig
+      .get(
+        "https://www.googleapis.com/oauth2/v3/userinfo?id_token=" +
+          response.accessToken
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const responseFacebook = (response) => {
@@ -189,7 +200,7 @@ function Signup(props) {
                   fill="#ffffff"
                 />
               </svg>
-              Sign in with Google
+              Sign up with Google
             </div>
           )}
           onSuccess={responseGoogle}

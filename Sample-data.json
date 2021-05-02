@@ -1,0 +1,79 @@
+{
+  "place": "Seawoods",
+  "lat": 19.021042,
+  "lng": 73.017971,
+  "transport": [
+    {
+      "transport_type": "Rickshaw",
+      "name": "Auto / Rickshaw",
+      "rate": "INR 18 first 2 Kms, 1 Re per 100 metres after that",
+      "route": "anywhere",
+      "time": "Depends on the distance",
+      "routes": [],
+      "coordinates": [
+        { "lat": 19.021192, "lng": 73.017638 },
+        { "lat": 19.022683, "lng": 73.016887 },
+        { "lat": 19.019823, "lng": 73.019998 },
+        { "lat": 19.014944, "lng": 73.015813 },
+        { "lat": 19.023195, "lng": 73.019805 }
+      ]
+    },
+    {
+      "transport_type": "Rickshaw",
+      "name": "Sharing Auto / Rickshaw",
+      "rate": "INR 15",
+      "route": "fixed",
+      "routes": ["Railway stn to sec 48", "Railway stn to Navratna Hotel"],
+      "time": "3-4mins",
+      "coordinates": [
+        { "lat": 19.01183, "lng": 73.014526 },
+        { "lat": 19.018961, "lng": 73.015556 }
+      ]
+    },
+    {
+      "name": "Bus NMMT",
+      "transport_type": "Bus",
+      "rate": "INR 7",
+      "route": "fixed",
+      "routes": [
+        "Railway stn to sec 48",
+        "Railway stn to Navratna Hotel",
+        "Railway stn to NRI complex Seawoods"
+      ],
+      "time": "7-8mins",
+      "coordinates": [
+        { "lat": 19.021091, "lng": 73.017401 },
+        { "lat": 19.021968, "lng": 73.016865 }
+      ]
+    },
+    {
+      "transport_type": "Walking",
+      "name": "Walking",
+      "rate": "NA",
+      "route": "NA",
+      "routes": ["Sec 36, 38, 40, 42, 44, 46, 48", "D Mart"],
+      "time": "10-12mins"
+    },
+    {
+      "transport_type": "Taxi",
+      "name": "Eco van / Taxi to Mumbai intl Airport",
+      "rate": "INR 650",
+      "route": "Fixed",
+      "routes": ["Palm beach -> Vashi -> Chembur -> Santacruz"],
+      "time": "45mins-1hr",
+      "coordinates": [{ "lat": 19.017992, "lng": 73.016667 }]
+    },
+    {
+      "transport_type": "Bicycle",
+      "name": "Yulu bicycles",
+      "rate": "INR 5 for unlocking, INR 1.5 per km thereafter",
+      "route": "NA",
+      "routes": [],
+      "time": "NA",
+      "coordinates": [{ "lat": 19.025678, "lng": 73.012316 },
+                      {"lat": 19.014982, "lng": 73.015584}, 
+                      {"lat": 19.007197, "lng": 73.016131}
+                    ]
+    }
+  ]
+}

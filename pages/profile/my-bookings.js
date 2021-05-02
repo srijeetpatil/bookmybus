@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import HomeLayout from "../../src/Layouts/HomeLayout";
 import styles2 from "../../styles/Mybookings.module.css";
 import styles from "../../styles/index.module.css";
@@ -79,68 +80,84 @@ function MyBookings() {
     }
   }, []);
 
-  const bookings = data.map((bus) => {
-    let seats = bus.my_seats.map((seat) => {
-      return <label>{seat}, </label>;
-    });
-    let time = bus.time;
-    time = dateConverter(time);
-    let today = new Date();
+  const bookings = () => {
+    if (data.length > 0) {
+      return data.map((bus) => {
+        let seats = bus.my_seats.map((seat) => {
+          return <label>{seat}, </label>;
+        });
+        let time = bus.time;
+        time = dateConverter(time);
+        let today = new Date();
+        return (
+          <>
+            <div className={styles.bus_card_tab}>
+              {bus.city_from} to {bus.city_to} {"   "}{" "}
+              <label style={{ fontSize: "10px" }}>booking done on {time}</label>
+            </div>
+            <div className={`${styles.bus_card} ${styles.font}`}>
+              <div className={styles.bus_wrapper}>
+                <div className={styles.bus_info}>
+                  <label className={styles.bus_name}>
+                    <b>{bus.company_name}</b>
+                  </label>
+                  <label className={styles.bus_smallText}>{bus.bus_name}</label>
+                </div>
+                <div className={styles.bus_info}>
+                  <label>
+                    <b>{bus.start_time}</b>
+                  </label>
+                  <label className={styles.bus_smallText}>
+                    {bus.start_place}
+                  </label>
+                </div>
+                <div style={{ marginLeft: "2rem" }}>{bus.commute_time}</div>
+                <div className={styles.bus_info}>
+                  <label>
+                    <b>{bus.end_time}</b>
+                  </label>
+                  <label className={styles.bus_smallText}>
+                    {bus.end_place}
+                  </label>
+                </div>
+                <div className={styles.bus_info}>
+                  <label>To pay</label>
+                  <label>
+                    <b>INR {bus.total}</b>
+                  </label>
+                </div>
+                <div className={styles.bus_seat_no}>
+                  <label>Seat no {seats}</label>
+                </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <label
+                  className={styles.cancel_booking}
+                  onClick={() => {
+                    setBookingData(bus);
+                    openDecisionModal(bus.busId, bus.bookingId);
+                  }}
+                >
+                  Cancel booking
+                </label>
+              </div>
+            </div>
+          </>
+        );
+      });
+    }
     return (
-      <>
-        <div className={styles.bus_card_tab}>
-          {bus.city_from} to {bus.city_to} {"   "}{" "}
-          <label style={{ fontSize: "10px" }}>booking done on {time}</label>
-        </div>
-        <div className={`${styles.bus_card} ${styles.font}`}>
-          <div className={styles.bus_wrapper}>
-            <div className={styles.bus_info}>
-              <label className={styles.bus_name}>
-                <b>{bus.company_name}</b>
-              </label>
-              <label className={styles.bus_smallText}>{bus.bus_name}</label>
-            </div>
-            <div className={styles.bus_info}>
-              <label>
-                <b>{bus.start_time}</b>
-              </label>
-              <label className={styles.bus_smallText}>{bus.start_place}</label>
-            </div>
-            <div style={{ marginLeft: "2rem" }}>{bus.commute_time}</div>
-            <div className={styles.bus_info}>
-              <label>
-                <b>{bus.end_time}</b>
-              </label>
-              <label className={styles.bus_smallText}>{bus.end_place}</label>
-            </div>
-            <div className={styles.bus_info}>
-              <label>To pay</label>
-              <label>
-                <b>INR {bus.total}</b>
-              </label>
-            </div>
-            <div className={styles.bus_seat_no}>
-              <label>Seat no {seats}</label>
-            </div>
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <label
-              className={styles.cancel_booking}
-              onClick={() => {
-                setBookingData(bus);
-                openDecisionModal(bus.busId, bus.bookingId);
-              }}
-            >
-              Cancel booking
-            </label>
-          </div>
-        </div>
-      </>
+      <h2 style={{ textAlign: "center", color: "white" }}>
+        No current bookings
+      </h2>
     );
-  });
+  };
   return (
     <div>
       <HomeLayout>
+        <Head>
+          <title>Bookmybus - My Bookings</title>
+        </Head>
         <DecisionModal
           open={decisionOpen}
           close={closeDecisionModal}
@@ -154,7 +171,7 @@ function MyBookings() {
         >
           <b>My Bookings</b>
         </h1>
-        <div className={styles2.bookings}>{bookings}</div>
+        <div className={styles2.bookings}>{bookings()}</div>
       </HomeLayout>
     </div>
   );

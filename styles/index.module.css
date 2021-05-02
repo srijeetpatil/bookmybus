@@ -160,12 +160,13 @@
 }
 
 .chip {
-  padding: 0.5rem;
-  background-color: #e9e1e1;
+  padding: 0.2rem 0.5rem;
+  background-color: #d81623;
   border-radius: 10px;
   margin-left: 1rem;
   margin-top: 0.5rem;
   cursor: pointer;
+  color: white;
 }
 
 .inputTextfield {
@@ -181,4 +182,17 @@
 
 .inputTextfield:hover {
   border: solid thin rgb(60, 138, 8);
+}
+
+@keyframes header {
+  from {
+    margin-top: 5rem;
+  }
+  to {
+    margin-top: 0rem;
+  }
+}
+
+.heading {
+  animation: header 1s;
 }

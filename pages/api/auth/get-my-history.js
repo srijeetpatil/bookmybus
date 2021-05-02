@@ -14,17 +14,7 @@ async function Getmyprofile(req, res) {
         if (err) {
           res.status(500).json({ error: "Internal server error" });
         } else if (result) {
-          let bookings = [];
-          for (let i = 0; i < result.bookings.length; i++) {
-            let time = result.bookings[i].time;
-            if (
-              time.toString().substring(0, 15) ===
-              new Date().toString().substring(0, 15)
-            ) {
-              bookings = bookings.concat(result.bookings[i]);
-            }
-          }
-          res.status(200).json({ result: bookings });
+          res.status(200).json({ result: result.bookings });
         }
       });
     } else {

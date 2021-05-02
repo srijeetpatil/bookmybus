@@ -23,11 +23,12 @@
   display: flex;
   flex-direction: row;
   width: 64em;
-  height: 100vh;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .transportTypes {
-  width: 50%;
+  width: 48%;
 }
 
 @keyframes header {
@@ -52,4 +53,20 @@
   width: 100%;
   margin-top: 1rem;
   user-select: none;
+}
+
+.marker_popup {
+  padding: 10px 10px;
+  z-index: 1000;
+  width: max-content;
+  background-color: purple;
+  position: relative;
+  color: white;
+}
+
+.marker_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: bottom;
+  align-items: center;
 }

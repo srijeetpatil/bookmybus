@@ -2,8 +2,8 @@ import Head from "next/head";
 import HomeLayout from "../src/Layouts/HomeLayout";
 import styles from "../styles/index.module.css";
 import { useEffect, useState } from "react";
-import GoogleMapReact from "google-map-react";
-import axiosConfig from "../util/config";
+import Bus from "../src/Components/Bus";
+import animStyles from "../styles/Localtravel.module.css";
 
 const containerStyle = {
   width: "100%",
@@ -134,28 +134,17 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeLayout>
-        <div className={styles.tab}>
-          <button
-            className={styles.tab_left}
-            onClick={() => (window.location.href = "/")}
-          >
-            <b>Book bus tickets</b>
-          </button>
-          <button
-            className={styles.tab_right}
-            onClick={() => (window.location.href = "/local-travel")}
-          >
-            <b>Local travel</b>
-          </button>
-        </div>
         <div
           style={{
             marginTop: "2rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            alignContent: "center",
           }}
+          className={styles.heading}
         >
+          <Bus />
           <div className={styles.to_from_inputs}>
             <div>
               <input
@@ -198,29 +187,25 @@ export default function Home(props) {
           >
             <b>Search buses</b>
           </button>
-          <h3
-            style={{
-              marginTop: "2rem",
-              textAlign: "center",
-              fontWeight: "300",
-            }}
+        </div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <h1 style={{ textAlign: "center", marginTop: "5rem" }}>
+            Travelling in Navi Mumbai and worried about how to reach to your
+            destination ? Use our local travel feature.
+          </h1>
+          <button
+            className={styles.search_button}
+            onClick={() => (window.location.href = "/local-travel")}
           >
-            Popular destinations
-          </h3>
-          <div className={styles.chips}>
-            <div className={styles.chip}>Mumbai</div>
-            <div className={styles.chip}>Pune</div>
-            <div className={styles.chip}>Kolhapur</div>
-            <div className={styles.chip}>Ahmednagar</div>
-            <div className={styles.chip}>Nashik</div>
-            <div className={styles.chip}>Satara</div>
-            <div className={styles.chip}>Ratnagiri</div>
-            <div className={styles.chip}>Chiplun</div>
-            <div className={styles.chip}>Yavatmal</div>
-            <div className={styles.chip}>Latur</div>
-            <div className={styles.chip}>Nandurbar</div>
-            <div className={styles.chip}>Alibaug</div>
-          </div>
+            <b>Local travel</b>
+          </button>
         </div>
       </HomeLayout>
     </div>
