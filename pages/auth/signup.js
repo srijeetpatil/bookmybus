@@ -62,16 +62,33 @@ function Signup(props) {
   };
 
   const responseGoogle = (response) => {
-    axiosConfig
-      .get(
-        "https://www.googleapis.com/oauth2/v3/userinfo?id_token=" +
-          response.accessToken
+    axios
+      .post(
+        "/api/auth/google-signup",
+        querystring.stringify({
+          token: response.accessToken,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
       )
-      .then((response) => {
-        console.log(response);
+      .then((resp) => {
+        if (resp.status == 200) {
+          window.location.href = "/auth/login";
+        }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status == 400) {
+            alert("User with email id already exists");
+          } else if (err.response.status == 500) {
+            alert("Internal server error");
+          }
+        } else {
+          alert("Network error");
+        }
       });
   };
 

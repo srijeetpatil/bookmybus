@@ -108,7 +108,13 @@ function LocalTravel(props) {
               lat={transport.coordinates[j].lat}
               lng={transport.coordinates[j].lng}
             >
-              <RickshawMarker name={transport.name} routes={transport.routes} />
+              <RickshawMarker
+                name={transport.name}
+                rate={transport.rate}
+                routes={transport.routes}
+                lat={transport.coordinates[j].lat}
+                lng={transport.coordinates[j].lng}
+              />
             </div>
           );
         } else if (transport.transport_type === "Bus") {
@@ -117,7 +123,13 @@ function LocalTravel(props) {
               lat={transport.coordinates[j].lat}
               lng={transport.coordinates[j].lng}
             >
-              <BusMarker />
+              <BusMarker
+                name={transport.name}
+                rate={transport.rate}
+                routes={transport.routes}
+                lat={transport.coordinates[j].lat}
+                lng={transport.coordinates[j].lng}
+              />
             </div>
           );
         } else if (transport.transport_type === "Taxi") {
@@ -126,7 +138,13 @@ function LocalTravel(props) {
               lat={transport.coordinates[j].lat}
               lng={transport.coordinates[j].lng}
             >
-              <TaxiMarker />
+              <TaxiMarker
+                name={transport.name}
+                rate={transport.rate}
+                routes={transport.routes}
+                lat={transport.coordinates[j].lat}
+                lng={transport.coordinates[j].lng}
+              />
             </div>
           );
         } else if (transport.transport_type === "Bicycle") {
@@ -135,7 +153,13 @@ function LocalTravel(props) {
               lat={transport.coordinates[j].lat}
               lng={transport.coordinates[j].lng}
             >
-              <BicycleMarker />
+              <BicycleMarker
+                name={transport.name}
+                rate={transport.rate}
+                routes={transport.routes}
+                lat={transport.coordinates[j].lat}
+                lng={transport.coordinates[j].lng}
+              />
             </div>
           );
         }

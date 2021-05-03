@@ -46,7 +46,35 @@ function Login(props) {
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
+    axios
+      .post(
+        "/api/auth/google-login/",
+        querystring.stringify({
+          token: response.accessToken,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((resp) => {
+        let id = resp.data.id;
+        id = encrypt(id);
+        setCookie("auth", id, 15);
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status == 400) {
+            alert("You need to signup first");
+          } else if (err.response.status == 500) {
+            alert("Internal server error");
+          }
+        } else {
+          alert("Network error");
+        }
+      });
   };
 
   const responseFacebook = (response) => {

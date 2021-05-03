@@ -52,6 +52,11 @@ function Header() {
   };
 
   if (userdata && isLoginChecked) {
+    let image = "";
+    console.log(userdata);
+    if (userdata.data.result.picture) {
+      image = userdata.data.result.picture;
+    }
     return (
       <div className={styles.navbar}>
         <h1
@@ -62,6 +67,7 @@ function Header() {
           Bookmybus
         </h1>
         <Avatar
+          src={image}
           style={{ marginRight: "2rem", cursor: "pointer" }}
           onClick={toggleDrawer("right", true)}
         />
@@ -72,7 +78,7 @@ function Header() {
             onClose={toggleDrawer("right", false)}
           >
             <div className={`${headerStyles.drawer} ${styles.font}`}>
-              <Avatar src="" />
+              <Avatar src={image} />
               <h3 className={headerStyles.username}>
                 <b>{userdata.data.result.name}</b>
               </h3>

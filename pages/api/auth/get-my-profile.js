@@ -17,6 +17,7 @@ async function Getmyprofile(req, res) {
           let data = {
             name: result.name,
             phone: result.phone,
+            picture: result.picture,
           };
           res.status(200).json({ result: data });
         }

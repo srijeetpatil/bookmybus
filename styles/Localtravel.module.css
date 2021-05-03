@@ -55,6 +55,15 @@
   user-select: none;
 }
 
+@keyframes markerAnim {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 .marker_popup {
   padding: 10px 10px;
   z-index: 1000;
@@ -62,6 +71,11 @@
   background-color: purple;
   position: relative;
   color: white;
+  margin-top: 0.3rem;
+  width: 10rem;
+  animation-name: markerAnim;
+  animation-duration: 100ms;
+  transition: ease;
 }
 
 .marker_info {

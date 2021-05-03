@@ -5,8 +5,10 @@ var userSchema = new Schema({
   _id: Schema.Types.ObjectId,
   email: String,
   password: String,
+  picture: String,
   name: String,
   phone: Number,
+  type: String,
   bookings: [
     {
       busId: String,
