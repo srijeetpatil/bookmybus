@@ -22,19 +22,36 @@ async function getGoogleUser(req, res) {
   });
 }
 
+async function updateGoogleuser(email, name, picture) {
+  return new Promise((resolve, reject) => {
+    User.findOneAndUpdate(
+      { email: email },
+      { name: name, picture: picture },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          return reject(false);
+        } else if (result) {
+          return resolve(true);
+        }
+      }
+    );
+  });
+}
+
 export default async function GoogleLogin(req, res) {
   if (req.method === "POST") {
     let user = await getGoogleUser(req, res);
     if (user) {
       let email = user.email;
-      User.find({ email: email, type: "Google" }, (err, result) => {
+      User.find({ email: email, type: "Google" }, async (err, result) => {
         if (err) {
           res.status(500).json({ error: "Internal server error" });
         } else if (result.length != 0) {
           let name = user.name;
           let picture = user.picture;
           if (name != result[0].name || picture != result[0].picture) {
-            //update logic
+            await updateGoogleuser(email, name, picture);
           }
           let id = result[0]._id;
           res.status(200).json({ id: id });
