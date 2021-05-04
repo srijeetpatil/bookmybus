@@ -212,13 +212,13 @@ function Login(props) {
 export default Login;
 
 export async function getServerSideProps(context) {
-  const { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } = process.env;
-  if (!FACEBOOK_APP_ID) FACEBOOK_APP_ID = null;
-  if (!GOOGLE_CLIENT_ID) GOOGLE_CLIENT_ID = null;
+  const { React_App_FACEBOOK_APP_ID, React_App_GOOGLE_CLIENT_ID } = process.env;
+  if (!React_App_FACEBOOK_APP_ID) React_App_FACEBOOK_APP_ID = null;
+  if (!React_App_GOOGLE_CLIENT_ID) React_App_GOOGLE_CLIENT_ID = null;
   return {
     props: {
-      FACEBOOK_APP_ID: FACEBOOK_APP_ID,
-      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID,
+      FACEBOOK_APP_ID: React_App_FACEBOOK_APP_ID,
+      GOOGLE_CLIENT_ID: React_App_GOOGLE_CLIENT_ID,
     },
   };
 }

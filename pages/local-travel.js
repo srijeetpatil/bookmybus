@@ -269,18 +269,18 @@ const getCity = (city) => {
 };
 
 export async function getServerSideProps(context) {
-  const { GOOGLE_API } = process.env;
+  const { React_App_GOOGLE_API } = process.env;
   let data = null;
   let query = context.req.__NEXT_INIT_QUERY;
   let at = query.at;
   if (!at) at = null;
   else data = await getCity(at);
-  if (!GOOGLE_API) GOOGLE_API = null;
+  if (!React_App_GOOGLE_API) React_App_GOOGLE_API = null;
   let cities = await getCities();
   return {
     props: {
       at: at,
-      GOOGLE_API: GOOGLE_API,
+      GOOGLE_API: React_App_GOOGLE_API,
       cities: cities,
       data: data,
     },

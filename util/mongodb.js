@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
-const { MONGODB_URI, MONGODB_DB } = process.env;
+const { React_App_MONGODB_URI, React_App_MONGODB_DB } = process.env;
 
 let cachedClient = null;
 let cachedDb = null;
 
-if (!MONGODB_URI) {
+if (!React_App_MONGODB_URI) {
   throw new Error(
     "Please define the MONGODB_URI environment variable inside .env.local"
   );
 }
 
-if (!MONGODB_DB) {
+if (!React_App_MONGODB_DB) {
   throw new Error(
     "Please define the MONGODB_DB environment variable inside .env.local"
   );
@@ -22,7 +22,7 @@ export async function connectToDatabase() {
     return { client: cachedClient, db: cachedDb };
   }
   try {
-    const client = mongoose.connect(MONGODB_URI, {
+    const client = mongoose.connect(React_App_MONGODB_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -33,7 +33,7 @@ export async function connectToDatabase() {
     mongoose.connection.on("error", (error) => {
       console.log(error);
     });
-    const db = MONGODB_DB;
+    const db = React_App_MONGODB_DB;
     cachedClient = client;
     cachedDb = db;
     return { client, db };
