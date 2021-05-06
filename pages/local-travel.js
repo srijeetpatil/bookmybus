@@ -11,17 +11,45 @@ import {
   BicycleMarker,
 } from "../src/Components/Markers";
 import axios from "axios";
-import MarkerPopup from "../src/Components/MarkerPopup";
+import axiosConfig from "../util/config";
+import { Avatar } from "@material-ui/core";
+import { decrypt } from "../util/crypto";
+import { getCookie, checkCookie } from "../util/cookie";
+
+const getComments = (city) => {
+  return new Promise((resolve, reject) => {
+    axiosConfig
+      .get("/api/local-travel/City/" + city + "/get-comments")
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
 function LocalTravel(props) {
   const [coordinates, setCoordinates] = useState();
   const [data, setData] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [id, setId] = useState();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (props.data && props.data.length > 0) {
       let coordinates = [props.data[0].lat, props.data[0].lng];
       setData(props.data[0].transport);
       setCoordinates(coordinates);
+      await getComments(props.at)
+        .then((resolve) => {
+          setComments(resolve.data.comments);
+        })
+        .catch((reject) => {});
+    }
+    if (checkCookie("auth")) {
+      let auth = getCookie("auth");
+      auth = decrypt(auth);
+      setId(auth);
     }
   }, []);
 
@@ -169,26 +197,71 @@ function LocalTravel(props) {
     return bunch;
   };
 
+  let commentsData = comments.map((comment) => {
+    if (comment.author._id === id) {
+      return (
+        <div className={styles2.comment_mine}>
+          <div className={styles2.comment_author}>
+            <Avatar />
+            <label style={{ marginLeft: "0.5rem" }}>You</label>
+          </div>
+          <p className={styles2.comment}>{comment.content}</p>
+        </div>
+      );
+    }
+    return (
+      <div className={styles2.comment_other}>
+        <div className={styles2.comment_author}>
+          <Avatar />
+          <label style={{ marginLeft: "0.5rem" }}>{comment.author.name}</label>
+        </div>
+        <p className={styles2.comment}>{comment.content}</p>
+      </div>
+    );
+  });
+
   const lcData = () => {
     if (coordinates) {
       return (
         <div className={styles2.data}>
           <div className={styles2.transportTypes}>{transportTypes}</div>
-          <GoogleMapReact
-            resetBoundsOnResize={true}
-            bootstrapURLKeys={{
-              key: props.GOOGLE_API,
-            }}
-            defaultCenter={{
-              lat: coordinates[0],
-              lng: coordinates[1],
-            }}
-            zoom={15}
-            options={createMapOptions}
-            style={{ width: "32em", height: "32em" }}
-          >
-            {markers()}
-          </GoogleMapReact>
+          <div style={{ width: "32em" }}>
+            <GoogleMapReact
+              resetBoundsOnResize={true}
+              bootstrapURLKeys={{
+                key: props.GOOGLE_API,
+              }}
+              defaultCenter={{
+                lat: coordinates[0],
+                lng: coordinates[1],
+              }}
+              zoom={15}
+              options={createMapOptions}
+              style={{ width: "100%", height: "32em" }}
+            >
+              {markers()}
+            </GoogleMapReact>
+            <div className={styles2.comments_section}>
+              <div
+                className={`${styles2.comments_section_heading} ${styles.bus_smallText}`}
+              >
+                <label>
+                  <b>Comments</b>
+                </label>
+              </div>
+              <div className={styles2.comments}>{commentsData}</div>
+              <div className={styles2.comments_section_add}>
+                <textarea
+                  className={`${styles2.comment_input} ${styles.font}`}
+                  rows={4}
+                  placeholder="Add comment"
+                />
+                <button className={styles2.comment_post_button}>
+                  <b>Post</b>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       );
     } else if (props.at && !coordinates) {

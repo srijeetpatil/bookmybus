@@ -3,7 +3,7 @@ import { getCookie } from "./cookie";
 import { decrypt } from "./crypto";
 
 const axiosConfig = axios.create({
-  baseURL: "https://bookmybus.herokuapp.com/",
+  baseURL: "http://localhost:3000/",
 });
 
 axiosConfig.interceptors.request.use(

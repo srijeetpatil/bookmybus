@@ -3,7 +3,7 @@ import styles from "../../styles/index.module.css";
 import headerStyles from "../../styles/header.module.css";
 import { Avatar, makeStyles, Drawer } from "@material-ui/core";
 import { decrypt } from "../../util/crypto";
-import axios from "../../util/config";
+import axiosConfig from "../../util/config";
 import { removeCookie } from "../../util/cookie";
 
 const logout = () => {
@@ -29,7 +29,7 @@ function Header() {
 
   const getMyProfile = () => {
     return new Promise((resolve, reject) => {
-      axios
+      axiosConfig
         .get("/api/auth/get-my-profile")
         .then((response) => {
           resolve(response);
@@ -53,7 +53,6 @@ function Header() {
 
   if (userdata && isLoginChecked) {
     let image = "";
-    console.log(userdata);
     if (userdata.data.result.picture) {
       image = userdata.data.result.picture;
     }

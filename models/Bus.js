@@ -14,7 +14,7 @@ var busSchema = new Schema({
   seats_available: Number,
   city_from: String,
   city_to: String,
-  seats: [{ type: Schema.Types.ObjectId }],
+  seats: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.models.Bus || mongoose.model("Bus", busSchema);

@@ -94,6 +94,7 @@ function Signup(props) {
 
   const responseFacebook = (response) => {
     console.log(response);
+    //https://graph.facebook.com/{your-user-id}/accounts?access_token={user-access-token} U2FsdGVkX19Nc05RHLkzPhF7NK751UjRWLUsZXyfu4JLvcTOyR727aYC1bxFm/zV
   };
 
   const signup = (name, email, password, phone) => {
