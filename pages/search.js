@@ -210,7 +210,7 @@ const searchBuses = (context, from, to) => {
   }
   return new Promise((resolve, reject) => {
     axios
-      .get(uri + from + "&to=" + to)
+      .get(uri)
       .then((response) => {
         resolve(response.data.result);
       })
