@@ -210,7 +210,7 @@ const searchBuses = (context, from, to) => {
   }
   return new Promise((resolve, reject) => {
     axios
-      .get("http://localhost:3000/api/search?from=" + from + "&to=" + to)
+      .get(uri + from + "&to=" + to)
       .then((response) => {
         resolve(response.data.result);
       })
