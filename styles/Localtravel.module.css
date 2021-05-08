@@ -136,14 +136,20 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: top;
+}
+
+.comment_author_info {
+  margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .comment_other {
   border-radius: 2px;
   max-width: 100%;
   width: max-content;
-  background-color: rgb(197, 188, 186);
+  background-color: rgb(228, 220, 218);
   padding: 0.3rem 0.4rem;
   font-size: 12px;
   margin-bottom: 0.5rem;
@@ -156,8 +162,8 @@
   background-color: rgb(161, 240, 176);
   padding: 0.3rem 0.4rem;
   font-size: 12px;
+  margin-bottom: 0.5rem;
 }
 
 .comment {
-  padding: 0 0.7rem 0 0.7rem;
 }

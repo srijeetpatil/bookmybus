@@ -7,7 +7,7 @@ export default async function GetComments(req, res) {
     let city = req.query.id;
     await connectObject.connectToDatabase();
     Comment.find({ city: city })
-      .populate("author", "name")
+      .populate("author", "name picture")
       .exec((err, result) => {
         if (err) {
           res.status(500).json({ error: "Internal server error" });

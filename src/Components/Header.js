@@ -69,6 +69,7 @@ function Header() {
           src={image}
           style={{ marginRight: "2rem", cursor: "pointer" }}
           onClick={toggleDrawer("right", true)}
+          referrerPolicy="no-referrer"
         />
         <React.Fragment key={"right"}>
           <Drawer
@@ -77,7 +78,7 @@ function Header() {
             onClose={toggleDrawer("right", false)}
           >
             <div className={`${headerStyles.drawer} ${styles.font}`}>
-              <Avatar src={image} />
+              <Avatar src={image} referrerPolicy="no-referrer" />
               <h3 className={headerStyles.username}>
                 <b>{userdata.data.result.name}</b>
               </h3>

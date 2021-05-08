@@ -20,7 +20,6 @@ function MyBookings() {
         window.location.reload(false);
       })
       .catch((error) => {
-        console.log(error);
         closeDecisionModal();
       });
   };
@@ -72,9 +71,7 @@ function MyBookings() {
         .then((resolve) => {
           setData(resolve);
         })
-        .catch((reject) => {
-          console.log(reject);
-        });
+        .catch((reject) => {});
     } else {
       window.location.href = "/";
     }
@@ -88,7 +85,6 @@ function MyBookings() {
         });
         let time = bus.time;
         time = dateConverter(time);
-        let today = new Date();
         return (
           <>
             <div className={styles.bus_card_tab}>

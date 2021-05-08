@@ -203,7 +203,11 @@ function Search(props) {
 
 export default Search;
 
-const searchBuses = (from, to) => {
+const searchBuses = (context, from, to) => {
+  let uri = "https://bookmybus.herokuapp.com/api/search?from=";
+  if (context.req.connection.remoteAddress === "127.0.0.1") {
+    uri = "http://localhost:3000/api/search?from=";
+  }
   return new Promise((resolve, reject) => {
     axios
       .get("http://localhost:3000/api/search?from=" + from + "&to=" + to)
@@ -224,7 +228,7 @@ export async function getServerSideProps(context) {
   let is_url = false;
   if (to && from) {
     is_url = true;
-    await searchBuses(from, to)
+    await searchBuses(context, from, to)
       .then((resolve) => {
         data = resolve;
       })

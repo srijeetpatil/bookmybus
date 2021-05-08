@@ -12,9 +12,13 @@ import {
 } from "../src/Components/Markers";
 import axios from "axios";
 import axiosConfig from "../util/config";
-import { Avatar } from "@material-ui/core";
+import { Avatar, useRadioGroup } from "@material-ui/core";
 import { decrypt } from "../util/crypto";
 import { getCookie, checkCookie } from "../util/cookie";
+import querystring from "querystring";
+import More from "../src/Components/More";
+import dateConverter from "../util/Date";
+import SuccessFailureModal from "../src/Components/SuccessFailureModal";
 
 const getComments = (city) => {
   return new Promise((resolve, reject) => {
@@ -29,11 +33,37 @@ const getComments = (city) => {
   });
 };
 
+const addComment = (comment, city) => {
+  return new Promise((resolve, reject) => {
+    axiosConfig
+      .post(
+        "/api/local-travel/City/" + city + "/add-comment",
+        querystring.stringify({
+          comment: comment,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 function LocalTravel(props) {
   const [coordinates, setCoordinates] = useState();
   const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [change, setChange] = useState();
   const [id, setId] = useState();
+  const [successFailureOpen, setSuccessFailure] = useState(false);
 
   useEffect(async () => {
     if (props.data && props.data.length > 0) {
@@ -52,6 +82,14 @@ function LocalTravel(props) {
       setId(auth);
     }
   }, []);
+
+  const openSuccessFailure = () => {
+    setSuccessFailure(true);
+  };
+
+  const closeSuccessFailure = () => {
+    setSuccessFailure(false);
+  };
 
   const createMapOptions = (maps) => {
     return {
@@ -197,28 +235,48 @@ function LocalTravel(props) {
     return bunch;
   };
 
-  let commentsData = comments.map((comment) => {
-    if (comment.author._id === id) {
-      return (
-        <div className={styles2.comment_mine}>
-          <div className={styles2.comment_author}>
-            <Avatar />
-            <label style={{ marginLeft: "0.5rem" }}>You</label>
+  let commentsData = () => {
+    if (comments.length > 0) {
+      return comments.map((comment) => {
+        let time;
+        let image;
+        time = dateConverter(comment.time);
+        if (comment.author.picture) image = comment.author.picture;
+        if (comment.author._id === id) {
+          return (
+            <div className={styles2.comment_mine}>
+              <div className={styles2.comment_author}>
+                <Avatar src={image} referrerPolicy="no-referrer" />
+                <div className={styles2.comment_author_info}>
+                  <label>
+                    <b>You</b>
+                  </label>
+                  <label style={{ fontSize: "10px" }}>{time}</label>
+                  <p className={styles2.comment}>{comment.content}</p>
+                </div>
+                <More />
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div className={styles2.comment_other}>
+            <div className={styles2.comment_author}>
+              <Avatar src={image} referrerPolicy="no-referrer" />
+              <div className={styles2.comment_author_info}>
+                <label>
+                  <b>{comment.author.name}</b>
+                </label>
+                <label style={{ fontSize: "10px" }}>{time}</label>
+                <p className={styles2.comment}>{comment.content}</p>
+              </div>
+            </div>
           </div>
-          <p className={styles2.comment}>{comment.content}</p>
-        </div>
-      );
+        );
+      });
     }
-    return (
-      <div className={styles2.comment_other}>
-        <div className={styles2.comment_author}>
-          <Avatar />
-          <label style={{ marginLeft: "0.5rem" }}>{comment.author.name}</label>
-        </div>
-        <p className={styles2.comment}>{comment.content}</p>
-      </div>
-    );
-  });
+    return <label>Start a discussion by adding comments</label>;
+  };
 
   const lcData = () => {
     if (coordinates) {
@@ -249,14 +307,40 @@ function LocalTravel(props) {
                   <b>Comments</b>
                 </label>
               </div>
-              <div className={styles2.comments}>{commentsData}</div>
+              <div className={styles2.comments}>{commentsData()}</div>
               <div className={styles2.comments_section_add}>
                 <textarea
                   className={`${styles2.comment_input} ${styles.font}`}
                   rows={4}
+                  onChange={(e) => setComment(e.target.value)}
                   placeholder="Add comment"
+                  id="comment-box"
                 />
-                <button className={styles2.comment_post_button}>
+                <button
+                  className={styles2.comment_post_button}
+                  onClick={async () => {
+                    if (comment) {
+                      await addComment(comment, props.at)
+                        .then(async (resolve) => {
+                          let str = "";
+                          setComment(str);
+                          await getComments(props.at)
+                            .then((resolve) => {
+                              document.getElementById("comment-box").value = "";
+                              setComments(resolve.data.comments);
+                            })
+                            .catch((reject) => {});
+                        })
+                        .catch((reject) => {
+                          if (reject.response) {
+                            if (reject.response.status == 403) {
+                              openSuccessFailure();
+                            }
+                          }
+                        });
+                    }
+                  }}
+                >
                   <b>Post</b>
                 </button>
               </div>
@@ -281,6 +365,11 @@ function LocalTravel(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeLayout>
+        <SuccessFailureModal
+          open={successFailureOpen}
+          close={closeSuccessFailure}
+          message={"Please login to add a comment"}
+        />
         <div className={styles2.heading}>Local travel: How does it work?</div>
         <div className={styles2.description}>
           <ul>
@@ -315,10 +404,14 @@ function LocalTravel(props) {
 
 export default LocalTravel;
 
-const getCities = () => {
+const getCities = (context) => {
+  let uri = "https://bookmybus.herokuapp.com/api/local-travel/get-cities";
+  if (context.req.connection.remoteAddress === "127.0.0.1") {
+    uri = "http://localhost:3000/api/local-travel/get-cities";
+  }
   return new Promise((resolve, reject) => {
     axios
-      .get("http://localhost:3000/api/local-travel/get-cities")
+      .get(uri)
       .then((response) => {
         return resolve(response.data.cities);
       })
@@ -328,10 +421,14 @@ const getCities = () => {
   });
 };
 
-const getCity = (city) => {
+const getCity = (context, city) => {
+  let uri = "https://bookmybus.herokuapp.com/api/local-travel/City/";
+  if (context.req.connection.remoteAddress === "127.0.0.1") {
+    uri = "http://localhost:3000/api/local-travel/City/";
+  }
   return new Promise((resolve, reject) => {
     axios
-      .get("http://localhost:3000/api/local-travel/City/" + city)
+      .get(uri + city)
       .then((response) => {
         return resolve(response.data.data);
       })
@@ -347,9 +444,9 @@ export async function getServerSideProps(context) {
   let query = context.req.__NEXT_INIT_QUERY;
   let at = query.at;
   if (!at) at = null;
-  else data = await getCity(at);
+  else data = await getCity(context, at);
   if (!React_App_GOOGLE_API) React_App_GOOGLE_API = null;
-  let cities = await getCities();
+  let cities = await getCities(context);
   return {
     props: {
       at: at,
