@@ -93,8 +93,35 @@ function Signup(props) {
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
-    //https://graph.facebook.com/{your-user-id}/accounts?access_token={user-access-token} U2FsdGVkX19Nc05RHLkzPhF7NK751UjRWLUsZXyfu4JLvcTOyR727aYC1bxFm/zV
+    axios
+      .post(
+        "/api/auth/facebook-signup",
+        querystring.stringify({
+          accessToken: response.accessToken,
+          userID: response.userID,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((resp) => {
+        if (resp.status == 200) {
+          window.location.href = "/auth/login";
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status == 400) {
+            alert("User with email id already exists");
+          } else if (err.response.status == 500) {
+            alert("Internal server error");
+          }
+        } else {
+          alert("Network error");
+        }
+      });
   };
 
   const signup = (name, email, password, phone) => {

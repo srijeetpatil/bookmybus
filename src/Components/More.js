@@ -1,4 +1,4 @@
-export default function More() {
+export default function More(props) {
   return (
     <svg
       version="1.1"
@@ -10,6 +10,7 @@ export default function More() {
       height="0.7rem"
       viewBox="0 0 384 384"
       style={{ cursor: "pointer" }}
+      onClick={props.onClick}
     >
       <g>
         <g>

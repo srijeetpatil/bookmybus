@@ -19,6 +19,7 @@ import querystring from "querystring";
 import More from "../src/Components/More";
 import dateConverter from "../util/Date";
 import SuccessFailureModal from "../src/Components/SuccessFailureModal";
+import MoreoptionsPopover from "../src/Components/MoreoptionsPopover";
 
 const getComments = (city) => {
   return new Promise((resolve, reject) => {
@@ -64,6 +65,8 @@ function LocalTravel(props) {
   const [change, setChange] = useState();
   const [id, setId] = useState();
   const [successFailureOpen, setSuccessFailure] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [moreId, setMoreId] = useState(null);
 
   useEffect(async () => {
     if (props.data && props.data.length > 0) {
@@ -82,6 +85,16 @@ function LocalTravel(props) {
       setId(auth);
     }
   }, []);
+
+  const openMorepopup = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setMoreId(id);
+  };
+
+  const closeMorepopup = () => {
+    setAnchorEl(null);
+    setMoreId(null);
+  };
 
   const openSuccessFailure = () => {
     setSuccessFailure(true);
@@ -243,6 +256,9 @@ function LocalTravel(props) {
         time = dateConverter(comment.time);
         if (comment.author.picture) image = comment.author.picture;
         if (comment.author._id === id) {
+          let popId = comment._id;
+          let popOpen = false;
+          if (moreId === popId) popOpen = true;
           return (
             <div className={styles2.comment_mine}>
               <div className={styles2.comment_author}>
@@ -254,7 +270,27 @@ function LocalTravel(props) {
                   <label style={{ fontSize: "10px" }}>{time}</label>
                   <p className={styles2.comment}>{comment.content}</p>
                 </div>
-                <More />
+                <More
+                  id={popId}
+                  onClick={(e) => {
+                    openMorepopup(e, popId);
+                  }}
+                />
+                <MoreoptionsPopover
+                  open={popOpen}
+                  anchorEl={anchorEl}
+                  handleClose={closeMorepopup}
+                  city={props.at}
+                  id={popId}
+                  refresh={async () => {
+                    await getComments(props.at)
+                      .then((resolve) => {
+                        document.getElementById("comment-box").value = "";
+                        setComments(resolve.data.comments);
+                      })
+                      .catch((reject) => {});
+                  }}
+                />
               </div>
             </div>
           );
@@ -385,7 +421,7 @@ function LocalTravel(props) {
             <li>Check the places in map to find these modes of transport</li>
           </ul>
         </div>
-        <h3
+        <h2
           style={{
             marginTop: "2rem",
             textAlign: "center",
@@ -393,9 +429,17 @@ function LocalTravel(props) {
           }}
         >
           Where are you right now?
-        </h3>
+        </h2>
         <div className={styles.chips}>{cities}</div>
-        <h2>{props.at}</h2>
+        <h2
+          style={{
+            marginTop: "2rem",
+            textAlign: "center",
+            color: "#d81623",
+          }}
+        >
+          {props.at}
+        </h2>
         {lcData()}
       </HomeLayout>
     </div>

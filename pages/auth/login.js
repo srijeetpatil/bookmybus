@@ -61,7 +61,7 @@ function Login(props) {
       .then((resp) => {
         let id = resp.data.id;
         id = encrypt(id);
-        setCookie("auth", id, 15);
+        setCookie("auth", id, 2);
         window.location.href = "/";
       })
       .catch((err) => {
@@ -78,7 +78,36 @@ function Login(props) {
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
+    axios
+      .post(
+        "/api/auth/facebook-login/",
+        querystring.stringify({
+          accessToken: response.accessToken,
+          userID: response.userID,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((resp) => {
+        let id = resp.data.id;
+        id = encrypt(id);
+        setCookie("auth", id, 2);
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status == 400) {
+            alert("You need to signup first");
+          } else if (err.response.status == 500) {
+            alert("Internal server error");
+          }
+        } else {
+          alert("Network error");
+        }
+      });
   };
 
   const login = (email, password) => {

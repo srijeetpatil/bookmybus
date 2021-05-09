@@ -12,7 +12,7 @@ export default async function DeleteComment(req, res) {
     Comment.findOneAndDelete({ _id: commentId, author: id }, (err, result) => {
       if (err) {
         res.status(500).json({ error: "Internal server error" });
-      } else if (result) {
+      } else {
         res.status(200).json({ message: "Success" });
       }
     });
