@@ -99,3 +99,28 @@
   background-color: #28ee76;
   margin-top: 1rem;
 }
+
+@media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
+  .modal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 90%;
+  }
+  .ticketDetails {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    display: flex;
+    font-size: 12px;
+    width: 150px;
+    flex-direction: column;
+  }
+  .seatPicker {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100px;
+    border: solid thin #ccc;
+  }
+}

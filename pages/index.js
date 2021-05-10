@@ -154,7 +154,7 @@ export default function Home(props) {
                 placeholder="From"
               />
             </div>
-            <div style={{ marginLeft: "2rem" }}>
+            <div>
               <input
                 className={`${styles.font} ${styles.inputTextfield}`}
                 id="toInput"
@@ -167,7 +167,6 @@ export default function Home(props) {
               id="date"
               name="Date"
               style={{
-                marginLeft: "2rem",
                 padding: "0.5rem 1rem 0.5rem 1rem",
                 backgroundColor: "#fa303d",
                 color: "white",

@@ -126,7 +126,7 @@
 }
 
 .comments {
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 0.3rem 0.3rem 0.3rem;
   display: flex;
   flex-direction: column;
 }
@@ -166,4 +166,54 @@
 }
 
 .comment {
+}
+
+@media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
+  .heading {
+    font-size: 4rem;
+    color: aliceblue;
+    animation: header 1s;
+    user-select: none;
+  }
+  .description {
+    color: #fa303d;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 1rem;
+    user-select: none;
+  }
+  .data {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .transportTypes {
+    width: 100%;
+  }
+  .bus_info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .places {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  .comment_author {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: top;
+  }
+  .comment_author_info {
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
 }

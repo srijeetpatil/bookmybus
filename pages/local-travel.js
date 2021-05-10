@@ -319,7 +319,7 @@ function LocalTravel(props) {
       return (
         <div className={styles2.data}>
           <div className={styles2.transportTypes}>{transportTypes}</div>
-          <div style={{ width: "32em" }}>
+          <div className={styles2.transportTypes}>
             <GoogleMapReact
               resetBoundsOnResize={true}
               bootstrapURLKeys={{

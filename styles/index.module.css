@@ -196,3 +196,26 @@
 .heading {
   animation: header 1s;
 }
+
+@media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+    padding: 0.5rem;
+  }
+  .to_from_inputs {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .bus_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    justify-content: space-around;
+  }
+}
