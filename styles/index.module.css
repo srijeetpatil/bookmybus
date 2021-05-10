@@ -12,6 +12,9 @@
   min-height: 3rem;
   padding-top: 1rem;
   max-height: 3rem;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
 .content {
@@ -157,6 +160,9 @@
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
 .chip {
@@ -197,6 +203,11 @@
   animation: header 1s;
 }
 
+.login_signup {
+  margin-right: 2em;
+  cursor: pointer;
+}
+
 @media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
   .content {
     display: flex;
@@ -217,5 +228,9 @@
     flex-direction: column;
     align-items: top;
     justify-content: space-around;
+  }
+  .login_signup {
+    margin-right: 1em;
+    cursor: pointer;
   }
 }

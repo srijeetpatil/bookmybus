@@ -120,13 +120,13 @@ function Header() {
         </h1>
         <div>
           <label
-            style={{ marginRight: "2em", cursor: "pointer" }}
+            className={styles.login_signup}
             onClick={() => (window.location.href = "/auth/login")}
           >
             Login
           </label>
           <label
-            style={{ marginRight: "2em", cursor: "pointer" }}
+            className={styles.login_signup}
             onClick={() => (window.location.href = "/auth/signup")}
           >
             Signup

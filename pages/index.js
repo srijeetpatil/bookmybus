@@ -162,17 +162,6 @@ export default function Home(props) {
                 placeholder="To"
               />
             </div>
-            <input
-              type="date"
-              id="date"
-              name="Date"
-              style={{
-                padding: "0.5rem 1rem 0.5rem 1rem",
-                backgroundColor: "#fa303d",
-                color: "white",
-                border: "none",
-              }}
-            ></input>
           </div>
           <button
             className={`${styles.search_button} ${styles.font}`}

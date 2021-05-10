@@ -9,10 +9,21 @@ import querystring from "querystring";
 import { encrypt } from "../../util/crypto";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import SuccessFailureModal from "../../src/Components/SuccessFailureModal";
 
 function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [successFailureOpen, setSuccessFailure] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const openSuccessFailure = () => {
+    setSuccessFailure(true);
+  };
+
+  const closeSuccessFailure = () => {
+    setSuccessFailure(false);
+  };
 
   useEffect(() => {
     if (checkCookie("auth")) {
@@ -34,7 +45,7 @@ function Login(props) {
         .then((resolve) => {
           let id = resolve.data.id;
           id = encrypt(id);
-          setCookie("auth", id, 15);
+          setCookie("auth", id, 2);
           window.location.href = "/";
         })
         .catch((reject) => {
@@ -67,12 +78,15 @@ function Login(props) {
       .catch((err) => {
         if (err.response) {
           if (err.response.status == 400) {
-            alert("You need to signup first");
+            setMessage("You need to signup first");
+            openSuccessFailure();
           } else if (err.response.status == 500) {
-            alert("Internal server error");
+            setMessage("Internal server error");
+            openSuccessFailure();
           }
         } else {
-          alert("Network error");
+          setMessage("Network error");
+          openSuccessFailure();
         }
       });
   };
@@ -100,12 +114,15 @@ function Login(props) {
       .catch((err) => {
         if (err.response) {
           if (err.response.status == 400) {
-            alert("You need to signup first");
+            setMessage("You need to signup first");
+            openSuccessFailure();
           } else if (err.response.status == 500) {
-            alert("Internal server error");
+            setMessage("Internal server error");
+            openSuccessFailure();
           }
         } else {
-          alert("Network error");
+          setMessage("Network error");
+          openSuccessFailure();
         }
       });
   };
@@ -136,6 +153,11 @@ function Login(props) {
 
   return (
     <HomeLayout>
+      <SuccessFailureModal
+        open={successFailureOpen}
+        close={closeSuccessFailure}
+        message={message}
+      />
       <Head>
         <title>Bookbus - Login</title>
         <link rel="icon" href="/favicon.ico" />

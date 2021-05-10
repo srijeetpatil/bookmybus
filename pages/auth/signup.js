@@ -8,7 +8,7 @@ import axios from "axios";
 import querystring from "querystring";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import axiosConfig from "../../util/config";
+import SuccessFailureModal from "../../src/Components/SuccessFailureModal";
 
 function Signup(props) {
   const [name, setName] = useState();
@@ -16,6 +16,16 @@ function Signup(props) {
   const [password, setPassword] = useState();
   const [password2, setPassword2] = useState();
   const [phone, setPhone] = useState();
+  const [successFailureOpen, setSuccessFailure] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const openSuccessFailure = () => {
+    setSuccessFailure(true);
+  };
+
+  const closeSuccessFailure = () => {
+    setSuccessFailure(false);
+  };
 
   useEffect(() => {
     if (checkCookie("auth")) {
@@ -82,12 +92,15 @@ function Signup(props) {
       .catch((err) => {
         if (err.response) {
           if (err.response.status == 400) {
-            alert("User with email id already exists");
+            setMessage("User with this email id already exists");
+            openSuccessFailure();
           } else if (err.response.status == 500) {
-            alert("Internal server error");
+            setMessage("Internal server error");
+            openSuccessFailure();
           }
         } else {
-          alert("Network error");
+          setMessage("Network error");
+          openSuccessFailure();
         }
       });
   };
@@ -114,12 +127,15 @@ function Signup(props) {
       .catch((err) => {
         if (err.response) {
           if (err.response.status == 400) {
-            alert("User with email id already exists");
+            setMessage("User with this email id already exists");
+            openSuccessFailure();
           } else if (err.response.status == 500) {
-            alert("Internal server error");
+            setMessage("Internal server error");
+            openSuccessFailure();
           }
         } else {
-          alert("Network error");
+          setMessage("Network error");
+          openSuccessFailure();
         }
       });
   };
@@ -156,6 +172,11 @@ function Signup(props) {
         <title>Bookbus - Signup</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <SuccessFailureModal
+        open={successFailureOpen}
+        close={closeSuccessFailure}
+        message={message}
+      />
       <div className={`${fontStyle.font} ${styles.signupBox}`}>
         <div className={styles.inputBox}>
           <input

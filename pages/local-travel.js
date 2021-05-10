@@ -62,7 +62,6 @@ function LocalTravel(props) {
   const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  const [change, setChange] = useState();
   const [id, setId] = useState();
   const [successFailureOpen, setSuccessFailure] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
