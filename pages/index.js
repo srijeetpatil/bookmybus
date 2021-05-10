@@ -131,7 +131,7 @@ export default function Home(props) {
     <div className="container">
       <Head>
         <title>Bookbus - book your bus tickets online here</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <HomeLayout>
         <div
