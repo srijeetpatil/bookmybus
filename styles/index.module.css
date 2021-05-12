@@ -166,13 +166,16 @@
 }
 
 .chip {
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 0.8rem;
   background-color: #d81623;
-  border-radius: 10px;
-  margin-left: 1rem;
+  margin-left: 0.1rem;
   margin-top: 0.5rem;
   cursor: pointer;
   color: white;
+}
+
+.chip:hover {
+  background-color: #fa303d;
 }
 
 .inputTextfield {
