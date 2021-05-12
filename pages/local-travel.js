@@ -310,7 +310,11 @@ function LocalTravel(props) {
         );
       });
     }
-    return <label>Start a discussion by adding comments</label>;
+    return (
+      <label style={{ marginLeft: "0.8rem" }}>
+        Start a discussion by adding comments
+      </label>
+    );
   };
 
   const lcData = () => {
@@ -385,9 +389,7 @@ function LocalTravel(props) {
       );
     } else if (props.at && !coordinates) {
       return (
-        <h2 style={{ textAlign: "center", marginTop: "4rem" }}>
-          No data found
-        </h2>
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>No data found</p>
       );
     }
     return <div></div>;

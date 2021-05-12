@@ -3,18 +3,6 @@ import HomeLayout from "../src/Layouts/HomeLayout";
 import styles from "../styles/index.module.css";
 import { useEffect, useState } from "react";
 import Bus from "../src/Components/Bus";
-import animStyles from "../styles/Localtravel.module.css";
-
-const containerStyle = {
-  width: "100%",
-  height: "400px",
-  zIndex: "0",
-  position: "relative",
-  marginTop: "2rem",
-};
-
-const coordinates = [18.99134037380452, 73.12056016593179];
-const dest = [19.021055, 73.013857];
 
 const data = [
   {

@@ -117,9 +117,9 @@ function Search(props) {
       });
     }
     return (
-      <h2 style={{ textAlign: "center" }}>
+      <p style={{ textAlign: "center" }}>
         No buses available with current parameters
-      </h2>
+      </p>
     );
   };
 
