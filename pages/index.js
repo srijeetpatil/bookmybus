@@ -4,115 +4,6 @@ import styles from "../styles/index.module.css";
 import { useEffect, useState } from "react";
 import Bus from "../src/Components/Bus";
 
-const data = [
-  {
-    company_name: "Konduskar travels",
-    bus_name: "Volvo Multi-Axle Sleeper A/C (2+1)",
-    start_time: "18:00",
-    start_place: "Sion",
-    end_time: "21:25",
-    end_place: "Wakad",
-    commute_time: "03hr 25m",
-    starting_price: "300",
-    seats_available: "33",
-    city_from: "Mumbai",
-    city_to: "Pune",
-  },
-  {
-    company_name: "Neeta tours and travels",
-    bus_name: "Bharat Benz A/C Seater (2+1)",
-    start_time: "16:00",
-    start_place: "Lonavala On Expressway",
-    end_time: "18:10",
-    end_place: "Wakad",
-    commute_time: "02h 10m",
-    starting_price: "320",
-    seats_available: "14",
-    city_from: "Mumbai",
-    city_to: "Pune",
-  },
-  {
-    company_name: "Dolphin travel house",
-    bus_name: "A/C Seater (2+1)",
-    start_time: "21:30",
-    start_place: "Lonavala On Expressway",
-    end_time: "07:30",
-    end_place: "Dabholkar Corner",
-    commute_time: "10h 00m",
-    starting_price: "600",
-    seats_available: "11",
-    city_from: "Mumbai",
-    city_to: "Kolhapur",
-  },
-  {
-    company_name: "N.T. Kartik",
-    bus_name: "A/C Sleeper (2+1)",
-    start_time: "21:40",
-    start_place: "Byculla",
-    end_time: "07:30",
-    end_place: "Bus Stand",
-    commute_time: "10h 00m",
-    starting_price: "600",
-    seats_available: "25",
-    city_from: "Mumbai",
-    city_to: "Kolhapur",
-  },
-  {
-    company_name: "BLACK OASIS (Ansh Roadways Pvt Ltd)",
-    bus_name: "Benz A/C Sleeper (2+1)",
-    start_time: "18:30",
-    start_place: "Borivali West",
-    end_time: "02:15",
-    end_place: "Dwarka Circle",
-    commute_time: "07h 45m",
-    starting_price: "660",
-    seats_available: "20",
-    city_from: "Mumbai",
-    city_to: "Nashik",
-  },
-  {
-    company_name: "N.T. Laxman Travels",
-    bus_name: "Benz A/C Sleeper (2+1)",
-    start_time: "19:00",
-    start_place: "Panvel",
-    end_time: "02:00",
-    end_place: "Dwarka Circle",
-    commute_time: "07h 45m",
-    starting_price: "611",
-    seats_available: "30",
-    city_from: "Mumbai",
-    city_to: "Nashik",
-  },
-  {
-    company_name: "Sai Virbhadra Travels",
-    bus_name: "Benz A/C Sleeper (2+1)",
-    start_time: "13:15",
-    start_place: "Dwarka Circle",
-    end_time: "02:00",
-    end_place: "Borivali East",
-    commute_time: "07h 45m",
-    starting_price: "700",
-    seats_available: "1",
-    city_from: "Nashik",
-    city_to: "Mumbai",
-  },
-];
-
-let cities = [
-  {
-    name: "Mumbai",
-  },
-  {
-    name: "Pune",
-  },
-  {
-    name: "Kolhapur",
-  },
-  {
-    name: "Nashik",
-  },
-];
-
 export default function Home(props) {
   useEffect(() => {}, []);
   return (
@@ -165,6 +56,24 @@ export default function Home(props) {
           >
             <b>Search buses</b>
           </button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginTop: "2rem",
+            }}
+          >
+            <div className={styles.helper_links}>
+              <a href="/search?from=Mumbai&to=Pune">Mumbai to Pune</a>
+            </div>
+            <div className={styles.helper_links}>
+              <a href="/search?from=Mumbai&to=Kolhapur">Mumbai to Kolhapur</a>
+            </div>
+            <div className={styles.helper_links}>
+              <a href="/search?from=Mumbai&to=Nashik">Mumbai to Nashik</a>
+            </div>
+          </div>
         </div>
         <div
           style={{

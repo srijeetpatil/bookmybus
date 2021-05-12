@@ -193,6 +193,12 @@
   border: solid thin rgb(60, 138, 8);
 }
 
+.helper_links {
+  padding: 0.4rem;
+  border-radius: 2px;
+  border: solid thin white;
+}
+
 @keyframes header {
   from {
     margin-top: 5rem;
