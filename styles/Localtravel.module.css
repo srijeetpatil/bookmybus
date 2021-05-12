@@ -170,10 +170,11 @@
 
 @media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
   .heading {
-    font-size: 4rem;
+    font-size: 2rem;
     color: aliceblue;
     animation: header 1s;
     user-select: none;
+    margin: 1rem 1.5rem 0 1.5rem;
   }
   .description {
     color: #fa303d;
