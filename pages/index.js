@@ -169,6 +169,8 @@ export default function Home(props) {
               let from = document.getElementById("fromInput").value;
               let to = document.getElementById("toInput").value;
               if (from && to) {
+                from = from.replace(" ", "");
+                to = to.replace(" ", "");
                 window.location.href = "/search?from=" + from + "&to=" + to;
               }
             }}
@@ -184,12 +186,12 @@ export default function Home(props) {
             flexDirection: "column",
           }}
         >
-          <h1 style={{ textAlign: "center", marginTop: "5rem" }}>
+          <p style={{ textAlign: "center", marginTop: "3rem" }}>
             Travelling in Navi Mumbai and worried about how to reach to your
             destination ? Use our local travel feature.
-          </h1>
+          </p>
           <button
-            className={styles.search_button}
+            className={styles.local_travel_button}
             onClick={() => (window.location.href = "/local-travel")}
           >
             <b>Local travel</b>

@@ -208,6 +208,19 @@
   cursor: pointer;
 }
 
+.local_travel_button {
+  background-color: #d81623;
+  font-size: 20px;
+  padding: 1rem;
+  outline: none;
+  border: none;
+  margin: auto;
+  color: aliceblue;
+  margin-top: 1rem;
+  cursor: pointer;
+  width: max-content;
+}
+
 @media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
   .content {
     display: flex;

@@ -176,6 +176,8 @@ function Search(props) {
               let from = document.getElementById("fromInput").value;
               let to = document.getElementById("toInput").value;
               if (from && to) {
+                from = from.replace(" ", "");
+                to = to.replace(" ", "");
                 window.location.href = "/search?from=" + from + "&to=" + to;
               }
             }}
