@@ -267,7 +267,6 @@ function LocalTravel(props) {
                     <b>You</b>
                   </label>
                   <label style={{ fontSize: "10px" }}>{time}</label>
-                  <p className={styles2.comment}>{comment.content}</p>
                 </div>
                 <More
                   id={popId}
@@ -291,6 +290,7 @@ function LocalTravel(props) {
                   }}
                 />
               </div>
+              <p className={styles2.comment}>{comment.content}</p>
             </div>
           );
         }
