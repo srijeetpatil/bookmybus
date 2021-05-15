@@ -303,9 +303,9 @@ function LocalTravel(props) {
                   <b>{comment.author.name}</b>
                 </label>
                 <label style={{ fontSize: "10px" }}>{time}</label>
-                <p className={styles2.comment}>{comment.content}</p>
               </div>
             </div>
+            <p className={styles2.comment}>{comment.content}</p>
           </div>
         );
       });

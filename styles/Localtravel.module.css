@@ -166,6 +166,7 @@
 }
 
 .comment {
+  margin-left: 3rem;
 }
 
 @media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
@@ -211,10 +212,7 @@
     flex-wrap: wrap;
     align-items: top;
   }
-  .comment_author_info {
-    margin-left: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  .comment {
+    margin-left: 3rem;
   }
 }
