@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  background-color: #fa303d;
+  color: white;
+  min-height: 20vh;
+}
+
+.main {
+  width: 70em;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  font-style: italic;
+  justify-content: center;
+  align-items: flex-start;
+  font-weight: 600;
+}
+
+.contact_info {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1rem;
+}
+
+.label {
+  font-weight: 500;
+  margin-top: 0.4rem;
+}
+
+@media only screen and (max-device-width: 1000px) and (-webkit-min-device-pixel-ratio: 1) {
+  .main {
+    width: 100%;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-style: italic;
+    justify-content: center;
+    align-items: flex-start;
+    font-weight: 600;
+  }
+
+  .contact_info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 2rem;
+  }
+
+  .label {    
+    margin-top: 0.4rem;
+  }
+}

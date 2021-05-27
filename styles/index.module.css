@@ -28,9 +28,11 @@
 .to_from_inputs {
   margin: auto;
   display: flex;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   margin-bottom: 1rem;
+  justify-content: space-evenly;
 }
 
 .search_button {
@@ -197,6 +199,7 @@
   padding: 0.4rem;
   border-radius: 2px;
   border: solid thin white;
+  font-weight: 600;
 }
 
 @keyframes header {

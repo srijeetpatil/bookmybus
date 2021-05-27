@@ -9,7 +9,7 @@ export default function Home(props) {
   return (
     <div className="container">
       <Head>
-        <title>Bookbus - book your bus tickets online here</title>
+        <title>Bookmybus - book your bus tickets online here</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <HomeLayout>
@@ -53,27 +53,10 @@ export default function Home(props) {
                 window.location.href = "/search?from=" + from + "&to=" + to;
               }
             }}
+
           >
             <b>Search buses</b>
-          </button>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              marginTop: "2rem",
-            }}
-          >
-            <div className={styles.helper_links}>
-              <a href="/search?from=Mumbai&to=Pune">Mumbai to Pune</a>
-            </div>
-            <div className={styles.helper_links}>
-              <a href="/search?from=Mumbai&to=Kolhapur">Mumbai to Kolhapur</a>
-            </div>
-            <div className={styles.helper_links}>
-              <a href="/search?from=Mumbai&to=Nashik">Mumbai to Nashik</a>
-            </div>
-          </div>
+          </button>          
         </div>
         <div
           style={{
@@ -83,7 +66,7 @@ export default function Home(props) {
             flexDirection: "column",
           }}
         >
-          <p style={{ textAlign: "center", marginTop: "3rem" }}>
+          <p style={{ textAlign: "center", marginTop: "3rem", fontWeight: "600" }}>
             Travelling in Navi Mumbai and worried about how to reach to your
             destination ? Use our local travel feature.
           </p>
