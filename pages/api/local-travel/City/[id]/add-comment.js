@@ -10,17 +10,20 @@ async function verifyUser(req, res) {
     let id = req.headers.authorization;
     if (id) {
       id = id.split("Token ")[1];
-      id = crypto.decrypt(id);
-      User.findById(id, (err, result) => {
-        if (err) {
-          res.status(500).json({ error: "Internal server error" });
-          return reject(false);
-        } else if (result) {
-          return resolve(true);
-        }
-      });
+      if (id) {
+        id = crypto.decrypt(id);
+        User.findById(id, (err, result) => {
+          if (err) {
+            res.status(500).json({ error: "Internal server error" });
+            return reject(false);
+          } else if (result) {
+            return resolve(true);
+          }
+        });
+      } else {
+        return reject(false);
+      }
     } else {
-      res.status(403).json({ error: "Forbidden" });
       return reject(false);
     }
   });
@@ -73,9 +76,16 @@ export default async function AddComment(req, res) {
   if (req.method === "POST") {
     let citydata = await getCity(req, res);
     if (citydata) {
-      let verify = await verifyUser(req, res);
+      let verify;
+      try {
+        verify = await verifyUser(req, res);
+      } catch (e) {
+        console.log(e);
+      }
       if (verify) {
         await createComment(req, res);
+      } else {
+        res.status(403).json({ error: "Forbidden" });
       }
     }
   } else {
