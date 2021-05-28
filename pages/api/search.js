@@ -27,14 +27,21 @@ export default async function Search(req, res) {
       let data = req.query;
       let from = data.from;
       let to = data.to;
-      Bus.find({ city_from: from, city_to: to }, (err, result) => {
-        if (err) {
-          res.status(500).json({ error: "Internal server error" });
-        } else {
-          let data = result;
-          res.status(200).json({ result: data });
+
+      Bus.find(
+        {
+          city_from: { $regex: new RegExp(from, "i") },
+          city_to: { $regex: new RegExp(to, "i") },
+        },
+        (err, result) => {
+          if (err) {
+            res.status(500).json({ error: "Internal server error" });
+          } else {
+            let data = result;
+            res.status(200).json({ result: data });
+          }
         }
-      });
+      );
     })
     .catch((reject) => {});
 }
