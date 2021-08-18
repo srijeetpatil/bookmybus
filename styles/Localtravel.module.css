@@ -41,10 +41,10 @@
 }
 
 .heading {
-  font-size: 6rem;
-  color: aliceblue;
+  font-size: 6rem;  
   animation: header 1s;
   user-select: none;
+  padding: 1rem;
 }
 
 .description {

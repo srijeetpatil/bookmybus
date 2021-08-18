@@ -32,22 +32,7 @@ function Footer() {
               https://github.com/srijeetpatil/online-bus-service
             </a>
           </label>
-        </div>
-        <div className={styles.contact_info}>
-          Motivation behind this web app
-          <label className={styles.label}>
-            This is a semester mini project. An online bus seat booking app,
-            along with a Local travel feature which helps general commuters to
-            find the optimum mode of transport in Navi Mumbai
-          </label>
-        </div>
-        <div className={styles.contact_info}>
-          Technologies used
-          <label className={styles.label}>
-            NEXT js, Mongodb, Mongoose, Google maps, Google Oauth, Facebook
-            Oauth
-          </label>
-        </div>
+        </div>        
       </div>
     </div>
   );

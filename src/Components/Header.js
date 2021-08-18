@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/index.module.css";
 import headerStyles from "../../styles/header.module.css";
 import { Avatar, makeStyles, Drawer } from "@material-ui/core";
-import { decrypt } from "../../util/crypto";
 import axiosConfig from "../../util/config";
 import { removeCookie } from "../../util/cookie";
 

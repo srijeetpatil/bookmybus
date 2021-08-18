@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 import Bus from "../src/Components/Bus";
 
 export default function Home(props) {
-  useEffect(() => {}, []);
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Bookmybus - book your bus tickets online here</title>
         <link rel="icon" href="/favicon.png" />
@@ -19,7 +18,7 @@ export default function Home(props) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignContent: "center",
+            alignContent: "center",            
           }}
           className={styles.heading}
         >
@@ -31,6 +30,7 @@ export default function Home(props) {
                 id="fromInput"
                 type="text"
                 placeholder="From"
+                defaultValue="Mumbai"
               />
             </div>
             <div>
@@ -39,6 +39,7 @@ export default function Home(props) {
                 id="toInput"
                 type="text"
                 placeholder="To"
+                defaultValue="Pune"
               />
             </div>
           </div>
@@ -53,20 +54,25 @@ export default function Home(props) {
                 window.location.href = "/search?from=" + from + "&to=" + to;
               }
             }}
-
           >
             <b>Search buses</b>
-          </button>          
+          </button>
         </div>
         <div
           style={{
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            flexDirection: "column",
+            flexDirection: "column",          
           }}
         >
-          <p style={{ textAlign: "center", marginTop: "3rem", fontWeight: "600" }}>
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "3rem",
+              fontWeight: "600",
+            }}
+          >
             Travelling in Navi Mumbai and worried about how to reach to your
             destination ? Use our local travel feature.
           </p>

@@ -42,7 +42,7 @@
   height: 100%;
   width: 100%;
   outline: none;
-  border: solid thin white;
+  border: solid thin rgb(143, 143, 143);
   padding: 15px;
   border-radius: 5px;
   font-size: 16px;

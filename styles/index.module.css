@@ -8,7 +8,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: aliceblue;
   min-height: 3rem;
   padding-top: 1rem;
   max-height: 3rem;
@@ -23,6 +22,8 @@
   width: 64em;
   margin: auto;
   padding: 2rem 0 2rem 0;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .to_from_inputs {
@@ -184,7 +185,7 @@
   height: 100%;
   width: 100%;
   outline: none;
-  border: solid thin aliceblue;
+  border: solid thin rgb(156, 156, 156);
   padding: 15px;
   border-radius: 5px;
   font-size: 16px;
@@ -240,6 +241,7 @@
     width: 100%;
     margin: auto;
     padding: 0.5rem;
+    box-shadow: none;
   }
   .to_from_inputs {
     margin: auto;
